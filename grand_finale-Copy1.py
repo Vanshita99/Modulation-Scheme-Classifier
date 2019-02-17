@@ -38,6 +38,16 @@ from matplotlib.patches import Rectangle
 
 
 # In[7]:
+json_file = open('model.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+loaded_model = model_from_json(loaded_model_json)
+# load weights into new model
+loaded_model.load_weights("./Coms_d1.hdf5")
+print("Loaded model from disk")
+
+# evaluate loaded model on test data
+loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
 
 def numeric_to_string(label):
@@ -68,16 +78,6 @@ def classifier(to_be_classified,loaded_model):
     string_labels=string_labels.reshape((to_be_classified.shape[0],1))
     return string_labels
 
-json_file = open('model.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-# load weights into new model
-loaded_model.load_weights("./Coms_d1.hdf5")
-print("Loaded model from disk")
-
-# evaluate loaded model on test data
-loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
 # In[9]:
 def input_and_prediction():
