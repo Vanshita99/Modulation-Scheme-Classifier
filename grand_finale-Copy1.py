@@ -8,7 +8,6 @@ from keras.models import model_from_json
 import matlab.engine
 import matplotlib
 from matplotlib import pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
 #import pandas as pd
 from keras import optimizers
 import keras
@@ -89,7 +88,6 @@ loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['
 
 
 eng = matlab.engine.start_matlab()
-get_ipython().run_line_magic('matplotlib', 'notebook')
 
     
 v,w,x,BW,z=eng.testFunction(nargout=5)
