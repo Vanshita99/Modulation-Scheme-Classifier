@@ -70,34 +70,32 @@ def classifier(to_be_classified,loaded_model):
 
 
 # In[9]:
-
-
-json_file = open('model.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-# load weights into new model
-loaded_model.load_weights("./Coms_d1.hdf5")
-print("Loaded model from disk")
+def input_and_prediction():
+    json_file = open('model.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+    # load weights into new model
+    loaded_model.load_weights("./Coms_d1.hdf5")
+    print("Loaded model from disk")
  
-# evaluate loaded model on test data
-loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    # evaluate loaded model on test data
+    loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-
-# In[10]:
-
-
-eng = matlab.engine.start_matlab()
+    eng = matlab.engine.start_matlab()
+    %matplotlib notebook
 
     
-v,w,x,BW,z=eng.testFunction(nargout=5)
-band_idx=np.asarray(v)
-band_idx=band_idx.reshape((band_idx.shape[1],1))
-bar_height=np.asarray(w)
-bar_height=bar_height.reshape((bar_height.shape[1],1))
-x_signal=np.asarray(x)
-x_signal=x_signal.reshape((18271,))
-to_be_classified=np.asarray(z)
+    v,w,x,BW,z=eng.testFunction(nargout=5)
+    band_idx=np.asarray(v)
+    band_idx=band_idx.reshape((band_idx.shape[1],1))
+    bar_height=np.asarray(w)
+    bar_height=bar_height.reshape((bar_height.shape[1],1))
+    x_signal=np.asarray(x)
+    x_signal=x_signal.reshape((18271,))
+    to_be_classified=np.asarray(z)
+    modulation_schemes=classifier(to_be_classified,loaded_model)
+    return modulation_schemes
 
 
 # In[ ]:
@@ -109,9 +107,8 @@ app = Flask(__name__)
     
 @app.route('/get_results',methods=['GET'])
 def get_classifier_results():
-    modulation_schemes=classifier(to_be_classified,loaded_model)
-    print(modulation_schemes)
-   
+    print(input_and_prediction())
+
 
 app.run(host='0.0.0.0',port = 10000)
 
