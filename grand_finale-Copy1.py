@@ -107,7 +107,7 @@ app = Flask(__name__)
     
 @app.route('/get_results',methods=['GET'])
 def get_classifier_results():
-    print(input_and_prediction())
+    return input_and_prediction()
 
 
 app.run(host='0.0.0.0',port = 10000)
