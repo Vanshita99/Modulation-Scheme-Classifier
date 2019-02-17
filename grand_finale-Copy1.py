@@ -83,7 +83,7 @@ def input_and_prediction():
     loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
     eng = matlab.engine.start_matlab()
-    %matplotlib notebook
+    
 
     
     v,w,x,BW,z=eng.testFunction(nargout=5)
