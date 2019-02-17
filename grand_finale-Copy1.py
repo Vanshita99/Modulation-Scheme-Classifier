@@ -81,6 +81,7 @@ def classifier(to_be_classified,loaded_model):
 
 # In[9]:
 def input_and_prediction():
+    global loaded_model
     eng = matlab.engine.start_matlab()
     
 
