@@ -99,6 +99,7 @@ def input_and_prediction():
     x_signal=x_signal.reshape((18271,))
     to_be_classified=np.asarray(z)
     modulation_schemes=classifier(to_be_classified,loaded_model)
+    print(modulation_schemes[0][0])
     return modulation_schemes[0][0]
 
 
@@ -111,8 +112,8 @@ app = Flask(__name__)
     
 @app.route('/get_results',methods=['GET'])
 def get_classifier_results():
-    return input_and_prediction()
-
+    check= input_and_prediction()
+    return check
 
 app.run(host='0.0.0.0',port = 10000)
 
