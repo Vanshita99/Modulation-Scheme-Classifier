@@ -95,7 +95,7 @@ def input_and_prediction():
     x_signal=x_signal.reshape((18271,))
     to_be_classified=np.asarray(z)
     modulation_schemes=classifier(to_be_classified,loaded_model)
-    return modulation_schemes
+    return modulation_schemes[0][0]
 
 
 # In[ ]:
