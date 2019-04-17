@@ -5,7 +5,7 @@ $(document).ready(function(){
     var str1 = "data:image/png;base64,";
 
     //receive details from server
-  
+  $('#btn').on('click',function(){
         socket.on('newnumber', function(msg) {
             console.log("received");
             
@@ -15,6 +15,6 @@ $(document).ready(function(){
             }});
             
         });
-    
+  }); 
 
 });
