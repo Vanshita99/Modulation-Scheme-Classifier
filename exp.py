@@ -150,12 +150,13 @@ def test_connect():
     # need visibility of the global thread object
     global thread
     print('Client connected')
-
+    thread_stop_event.clear()
     #Start the random number generator thread only if the thread has not been started before.
     if not thread.isAlive():
         print("Starting Thread")
         thread = RandomThread()
         thread.start()
+
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
