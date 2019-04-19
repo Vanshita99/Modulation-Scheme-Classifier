@@ -171,5 +171,5 @@ def get_image():
     return Response(x,mimetype="text")    
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host='192.168.17.19', port=5000)
 

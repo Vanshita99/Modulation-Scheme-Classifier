@@ -26,7 +26,9 @@ from time import sleep
 from threading import Thread, Event
 from scipy.io import loadmat
 import numpy as np
-import h5py 
+import h5py
+import matplotlib 
+matplotlib.use('agg') 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from io import BytesIO
