@@ -1,11 +1,12 @@
-
+var socket;
 $(document).ready(function(){
     //connect to the socket server.
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+     
     var str1 = "data:image/png;base64,";
 
     //receive details from server
-  $('#btn').on('click',function(){
+  $('#start').on('click',function(){
+        socket=io.connect('http://' + document.domain + ':' + location.port + '/test');
         socket.on('newnumber', function(msg) {
             console.log("received");
             
@@ -16,5 +17,10 @@ $(document).ready(function(){
             
         });
   }); 
+
+  $('#stop').on('click',function(){
+        socket.disconnect()
+        console.log("stopping");
+  });
 
 });
