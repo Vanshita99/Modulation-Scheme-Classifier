@@ -177,6 +177,10 @@ def test_disconnect():
     #thread_stop_event.set()
     print('Client disconnected')
     
+@app.route("/settings/<string:data>")
+def recieve_settings(data):
+    print(data)
+    return Response("I got it",mimetype="text")
 
 
 @app.route("/get_image")

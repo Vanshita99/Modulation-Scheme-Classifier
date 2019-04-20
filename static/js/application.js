@@ -1,4 +1,11 @@
 var socket;
+function send_settings(data){
+    $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
+    alert("Data: " + data + "\nStatus: " + status);
+  });
+}
+
+
 $(document).ready(function(){
     //connect to the socket server.
      
@@ -23,5 +30,7 @@ $(document).ready(function(){
         socket.disconnect();
         console.log("stopping");
   });
+
+
 
 });
