@@ -37,6 +37,7 @@ socketio = SocketIO(app)
 #random number Generator Thread
 thread = Thread()
 thread_stop_event = Event()
+thread_loop_condition=False
 
 class RandomThread(Thread):
     def __init__(self):
@@ -99,6 +100,8 @@ class RandomThread(Thread):
         ax = fig.add_subplot(111)
         loaded_model=self.loading_model()
         while not thread_stop_event.isSet():
+            if not thread_loop_condition:
+                continue
             plt.pause(1)
             if i%2==0:
                 v,w,x,BW,z=eng.testFunction(nargout=5)
@@ -128,7 +131,7 @@ class RandomThread(Thread):
                 socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                 ax.clear()
             i=i+1        
-        sys.exit()
+        #sys.exit()
 
         
             
@@ -153,7 +156,9 @@ def test_connect():
     # need visibility of the global thread object
     global thread
     print('Client connected')
-    thread_stop_event.clear()
+    #thread_stop_event.clear()
+    global thread_loop_condition
+    thread_loop_condition=True
     #Start the random number generator thread only if the thread has not been started before.
     if not thread.isAlive():
         print("Starting Thread")
@@ -163,7 +168,9 @@ def test_connect():
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
-    thread_stop_event.set()
+    global thread_loop_condition
+    thread_loop_condition=False
+    #thread_stop_event.set()
     print('Client disconnected')
     
 
