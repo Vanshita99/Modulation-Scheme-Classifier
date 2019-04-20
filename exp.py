@@ -22,6 +22,9 @@ from keras import backend as K
 
 
 
+thread = Thread()
+thread_stop_event = Event()
+thread_loop_condition=False
 
 
 

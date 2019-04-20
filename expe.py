@@ -20,7 +20,9 @@ import matlab.engine
 import sys
 
 
-
+thread = Thread()
+thread_stop_event = Event()
+thread_loop_condition=False
 
 
 
