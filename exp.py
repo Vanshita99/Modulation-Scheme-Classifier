@@ -39,6 +39,19 @@ thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
 
+json_file = open('model.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+print("load_model")
+loaded_model = model_from_json(loaded_model_json)
+# load weights into new model
+print("loaded_weights")
+loaded_model.load_weights("./Coms_d1.hdf5")
+print("Loaded model from disk")
+# evaluate loaded model on test data
+loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+print("model_compiled")
+
 class RandomThread(Thread):
     def __init__(self):
         self.delay = 1
@@ -61,21 +74,23 @@ class RandomThread(Thread):
             return "8-PAM"
     
     def loading_model(self):
-        json_file = open('model.json', 'r')
-        loaded_model_json = json_file.read()
-        json_file.close()
-        print("load_model")
-        loaded_model = model_from_json(loaded_model_json)
-        # load weights into new model
-        print("loaded_weights")
-        loaded_model.load_weights("./Coms_d1.hdf5")
-        print("Loaded model from disk")
-        # evaluate loaded model on test data
-        loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-        print("model_compiled")
+        # json_file = open('model.json', 'r')
+        # loaded_model_json = json_file.read()
+        # json_file.close()
+        # print("load_model")
+        # loaded_model = model_from_json(loaded_model_json)
+        # # load weights into new model
+        # print("loaded_weights")
+        # loaded_model.load_weights("./Coms_d1.hdf5")
+        # print("Loaded model from disk")
+        # # evaluate loaded model on test data
+        # loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        # print("model_compiled")
+        global loaded_model
         return loaded_model
     
-    def classifier(self,to_be_classified,loaded_model):
+    def classifier(self,to_be_classified):
+        global loaded_model
         labels=loaded_model.predict_classes(to_be_classified)
         string_labels=np.array([])
         for i in range(to_be_classified.shape[0]):
@@ -98,7 +113,7 @@ class RandomThread(Thread):
         i=0
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        loaded_model=self.loading_model()
+        #loaded_model=self.loading_model()
         while not thread_stop_event.isSet():
             if not thread_loop_condition:
                 continue
@@ -112,7 +127,7 @@ class RandomThread(Thread):
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
                 to_be_classified=np.asarray(z)
-                modulation_schemes=self.classifier(to_be_classified,loaded_model)
+                modulation_schemes=self.classifier(to_be_classified)
                 x=np.arange(x_signal.shape[0])
                 y=x_signal
                 ax.plot(x,y)
