@@ -88,7 +88,8 @@ class RandomThread(Thread):
         global loaded_model
         return loaded_model
     
-    def classifier(self,to_be_classified,loaded_model):
+    def classifier(self,to_be_classified):
+        global loaded_model
         labels=loaded_model.predict_classes(to_be_classified)
         string_labels=np.array([])
         for i in range(to_be_classified.shape[0]):
@@ -111,7 +112,7 @@ class RandomThread(Thread):
         i=0
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        loaded_model=self.loading_model()
+        #loaded_model=self.loading_model()
         while not thread_stop_event.isSet():
             plt.pause(1)
             if i%2==0:
@@ -123,7 +124,7 @@ class RandomThread(Thread):
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
                 to_be_classified=np.asarray(z)
-                modulation_schemes=self.classifier(to_be_classified,loaded_model)
+                modulation_schemes=self.classifier(to_be_classified)
                 x=np.arange(x_signal.shape[0])
                 y=x_signal
                 ax.plot(x,y)
