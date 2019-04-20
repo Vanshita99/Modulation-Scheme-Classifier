@@ -17,7 +17,7 @@ from flask import send_file
 from flask import Response
 import time
 import matlab.engine
-
+import sys
 
 
 
@@ -125,7 +125,7 @@ class RandomThread(Thread):
                 socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                 ax.clear()
             i=i+1        
-        
+        sys.exit()
 
         
             
@@ -162,6 +162,8 @@ def test_connect():
 def test_disconnect():
     thread_stop_event.set()
     print('Client disconnected')
+    
+
 
 @app.route("/get_image")
 def get_image():
