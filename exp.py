@@ -115,8 +115,7 @@ class RandomThread(Thread):
         ax = fig.add_subplot(111)
         #loaded_model=self.loading_model()
         while not thread_stop_event.isSet():
-            if not thread_loop_condition:
-                continue
+            
             plt.pause(1)
             if i%2==0:
                 v,w,x,BW,z=eng.testFunction(nargout=5)
