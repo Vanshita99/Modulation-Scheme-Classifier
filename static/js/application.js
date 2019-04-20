@@ -7,6 +7,7 @@ $(document).ready(function(){
     //receive details from server
   $('#start').on('click',function(){
         socket=io.connect('http://' + document.domain + ':' + location.port + '/test');
+        socket.connect();
         socket.on('newnumber', function(msg) {
             console.log("received");
             
@@ -19,7 +20,7 @@ $(document).ready(function(){
   }); 
 
   $('#stop').on('click',function(){
-        socket.disconnect()
+        socket.disconnect();
         console.log("stopping");
   });
 
