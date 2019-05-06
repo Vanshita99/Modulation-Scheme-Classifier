@@ -61,6 +61,24 @@ class RandomThread(Thread):
             return "256-QAM"
         else :
             return "8-PAM"
+
+
+    def numeric_to_string_actual(self,label):
+        if label==1:
+            return "2PSK"
+        elif label==2:
+            return "4PSK"
+        elif label==3:
+            return "16QAM"
+        elif label==4:
+            return "64QAM"
+        elif label==5:
+            return "128QAM"
+        elif label==6:
+            return "256QAM"
+        else:
+            return "8-PAM"
+
     
     def loading_model(self):
         json_file = open('model.json', 'r')
@@ -108,7 +126,9 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                v,w,x,BW,z=eng.testFunction(nargout=5)
+                a,v,w,x,BW,z=eng.testFunction(nargout=6)
+                actual_integer=np.asarray(a)
+                actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
                 band_idx=band_idx.reshape((band_idx.shape[1],1))
                 bar_height=np.asarray(w)
@@ -126,11 +146,13 @@ class RandomThread(Thread):
             else:
                 ax.plot(x,y)
                 for j in range(2):
+                    actual=numeric_to_string_actual(actual_integer[j][0])
                     BN1=band_idx[j][0]
                     BW1=BW
                     height=bar_height[j][0]
                     ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
                     ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])  # just plug modulation_schemes instead of ms her
+                    ax.text(BW1*(BN1-1), height+60, actual)
                 fig.savefig("test.png")
                 socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                 ax.clear()
