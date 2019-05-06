@@ -146,7 +146,7 @@ class RandomThread(Thread):
             else:
                 ax.plot(x,y)
                 for j in range(2):
-                    actual=numeric_to_string_actual(actual_integer[j][0])
+                    actual=self.numeric_to_string_actual(actual_integer[j][0])
                     BN1=band_idx[j][0]
                     BW1=BW
                     height=bar_height[j][0]
