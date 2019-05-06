@@ -128,7 +128,9 @@ class RandomThread(Thread):
             if i%2==0:
                 a,v,w,x,BW,z=eng.testFunction(nargout=6)
                 actual_integer=np.asarray(a)
+                print("==================================")
                 print(actual_integer.shape)
+                time.sleep(20)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
                 band_idx=band_idx.reshape((band_idx.shape[1],1))
