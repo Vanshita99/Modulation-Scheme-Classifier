@@ -22,11 +22,23 @@ from keras import backend as K
 
 
 
+
+
+
+
+
+
+
+
+
 thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
+# model="model_lstm.json"
+# weights="weights_lstm.hdf5"
 
-
+model="model.json"
+weights="Coms_d1.hdf5"
 
 
 __author__ = 'slynn'
@@ -41,6 +53,11 @@ socketio = SocketIO(app)
 #random number Generator Thread
 
 
+
+
+
+
+
 class RandomThread(Thread):
     def __init__(self):
         self.delay = 1
@@ -48,47 +65,47 @@ class RandomThread(Thread):
         
     def numeric_to_string(self,label):
         if label==0:
-            return "BPSK"
+            return "2psk"
         elif label==1:
-            return "QPSK"
+            return "4psk"
         elif label==2:
-            return "16-QAM"
+            return "16qam"
         elif label==3:
-            return "64-QAM"
+            return "64qam"
         elif label==4:
-            return "128-QAM"
+            return "128qam"
         elif label==5:
-            return "256-QAM"
+            return "256qam"
         else :
             return "8-PAM"
 
 
     def numeric_to_string_actual(self,label):
         if label==1:
-            return "2PSK"
+            return "2psk"
         elif label==2:
-            return "4PSK"
+            return "4psk"
         elif label==3:
-            return "16QAM"
+            return "16qam"
         elif label==4:
-            return "64QAM"
+            return "64qam"
         elif label==5:
-            return "128QAM"
+            return "128qam"
         elif label==6:
-            return "256QAM"
+            return "256qam"
         else:
             return "8-PAM"
 
     
     def loading_model(self):
-        json_file = open('model.json', 'r')
+        json_file = open(model, 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("load_model")
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
         print("loaded_weights")
-        loaded_model.load_weights("./Coms_d1.hdf5")
+        loaded_model.load_weights(weights)
         print("Loaded model from disk")
         # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
@@ -104,6 +121,15 @@ class RandomThread(Thread):
             string_labels=np.append(string_labels,self.numeric_to_string(labels[i]))
         string_labels=string_labels.reshape((to_be_classified.shape[0],1))
         return string_labels    
+
+
+
+
+
+
+
+
+
 
     def randomNumberGenerator(self):
         """
@@ -128,12 +154,12 @@ class RandomThread(Thread):
             if i%2==0:
                 a,v,w,x,BW,z=eng.testFunction(nargout=6)
                 actual_integer=np.asarray(a)
-                print(actual_integer.shape[1])
-                #actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
+                #print(actual_integer.shape[1])
+                actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
-                print("==================================")
-                print(actual_integer.shape[1])
-                time.sleep(20)
+                #print("==================================")
+                #print(actual_integer.shape[1])
+                #time.sleep(20)
                 band_idx=band_idx.reshape((band_idx.shape[1],1))
                 bar_height=np.asarray(w)
                 bar_height=bar_height.reshape((bar_height.shape[1],1))
@@ -202,6 +228,26 @@ def test_disconnect():
     thread_loop_condition=False
     #thread_stop_event.set()
     print('Client disconnected')
+
+@socketio.on('cnn', namespace='/test')
+def test_cnn():
+    global model
+    model="model_cnn.json"
+
+    global weights
+    weights="weights_cnn.hdf5"
+    #thread_stop_event.set()
+    print('cnn')
+
+@socketio.on('lstm', namespace='/test')
+def test_lstm():
+    global model
+    model="model_lstm.json"
+
+    global weights
+    weights="weights_lstm,hdf5"
+    #thread_stop_event.set()
+    print('lstm')
     
 @app.route("/settings/<string:data>")
 def recieve_settings(data):
