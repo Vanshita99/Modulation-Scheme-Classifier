@@ -108,7 +108,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                v,w,x,BW,z=eng.testFunction(nargout=5)
+                a,v,w,x,BW,z=eng.testFunction(nargout=6)
                 band_idx=np.asarray(v)
                 band_idx=band_idx.reshape((band_idx.shape[1],1))
                 bar_height=np.asarray(w)
