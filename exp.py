@@ -22,23 +22,11 @@ from keras import backend as K
 
 
 
-
-
-
-
-
-
-
-
-
 thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
-# model="model_lstm.json"
-# weights="weights_lstm.hdf5"
 
-model="model.json"
-weights="Coms_d1.hdf5"
+
 
 
 __author__ = 'slynn'
@@ -51,11 +39,6 @@ app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
 #random number Generator Thread
-
-
-
-
-
 
 
 class RandomThread(Thread):
@@ -95,17 +78,16 @@ class RandomThread(Thread):
             return "256qam"
         else:
             return "8-PAM"
-
     
     def loading_model(self):
-        json_file = open(model, 'r')
+        json_file = open('model.json', 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("load_model")
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
         print("loaded_weights")
-        loaded_model.load_weights(weights)
+        loaded_model.load_weights("./Coms_d1.hdf5")
         print("Loaded model from disk")
         # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
@@ -121,15 +103,6 @@ class RandomThread(Thread):
             string_labels=np.append(string_labels,self.numeric_to_string(labels[i]))
         string_labels=string_labels.reshape((to_be_classified.shape[0],1))
         return string_labels    
-
-
-
-
-
-
-
-
-
 
     def randomNumberGenerator(self):
         """
@@ -154,15 +127,11 @@ class RandomThread(Thread):
             if i%2==0:
                 a,v,w,x,BW,z=eng.testFunction(nargout=6)
                 actual_integer=np.asarray(a)
-                #print(actual_integer.shape[1])
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
-                #print("==================================")
-                #print(actual_integer.shape[1])
-                #time.sleep(20)
                 band_idx=band_idx.reshape((band_idx.shape[1],1))
                 bar_height=np.asarray(w)
-                bar_height=bar_height.reshape((bar_height.shape[1],1))
+                bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
                 to_be_classified=np.asarray(z)
@@ -181,8 +150,8 @@ class RandomThread(Thread):
                     BW1=BW
                     height=bar_height[j][0]
                     ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
-                    ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])  # just plug modulation_schemes instead of ms her
-                    ax.text(BW1*(BN1-1), height+60, actual)
+                    ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
+                    ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
                 fig.savefig("test.png")
                 socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                 ax.clear()
@@ -228,26 +197,6 @@ def test_disconnect():
     thread_loop_condition=False
     #thread_stop_event.set()
     print('Client disconnected')
-
-@socketio.on('cnn', namespace='/test')
-def test_cnn():
-    global model
-    model="model_cnn.json"
-
-    global weights
-    weights="weights_cnn.hdf5"
-    #thread_stop_event.set()
-    print('cnn')
-
-@socketio.on('lstm', namespace='/test')
-def test_lstm():
-    global model
-    model="model_lstm.json"
-
-    global weights
-    weights="weights_lstm,hdf5"
-    #thread_stop_event.set()
-    print('lstm')
     
 @app.route("/settings/<string:data>")
 def recieve_settings(data):

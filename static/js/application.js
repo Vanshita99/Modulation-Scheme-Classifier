@@ -26,16 +26,6 @@ $(document).ready(function(){
         });
   }); 
 
-  $('#cnn').on('click',function(){
-        socket.cnn();
-        console.log("cnn");
-  });
-
-  $('#lstm').on('click',function(){
-        socket.()lstm
-        console.log("lstm");
-  });
-
   $('#stop').on('click',function(){
         socket.disconnect();
         console.log("stopping");
