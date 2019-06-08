@@ -1,5 +1,6 @@
 var socket;
 function send_settings(data){
+    console.log("Sending settings with data = " + data);
     $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
     alert("Data: " + data + "\nStatus: " + status);
   });
@@ -27,26 +28,28 @@ $(document).ready(function(){
   }); 
 
   $("#settings input[name='model_type']").click(function(){
-    alert('You clicked radio!');
-    if($('input:radio[name=model_type]:checked').val() == "cnn"){
-        alert($('input:radio[name=type]:checked').val());
-        //$('#select-table > .roomNumber').attr('enabled',false);
+    model = $('input:radio[name=model_type]:checked').val();
+    console.log("You selected model_type = " + model);
+    if(model == "cnn") {
+      set_model_cnn();
+    } else if(model == "lstm") {
+      set_model_lstm();
     }
-});
+  });
 
-  $('#cnn').on('click', function() {
+  function set_model_cnn() {
     var settingObject = new Object();
     settingObject.cnn = true;
     settingObject.lstm = false;
     send_settings(JSON.stringify(settingObject));
-  });
+  }
 
-  $('#lstm').on('click', function() {
+  function set_model_lstm() {
     var settingObject = new Object();
     settingObject.cnn = false;
     settingObject.lstm = true;
     send_settings(JSON.stringify(settingObject));
-  });
+  }
 
   
 
