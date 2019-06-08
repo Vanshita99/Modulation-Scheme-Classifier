@@ -202,13 +202,13 @@ def test_disconnect():
 def recieve_settings(data):
     print(data)
     import json
-    json_data = json.load(data)
+    json_data = json.loads(data)
     print(type(json_data))
     if json_data['cnn']:
-        print("Set cnn")
+        return Response("Backend : setting model type to cnn",mimetype="text")
     elif json_data['lstm']:
-        print("Set lstm")
-    return Response("I got it",mimetype="text")
+        return Response("Backend : setting model type to lstm",mimetype="text")
+    return Response("I got it. But could not select anything",mimetype="text")
 
 
 @app.route("/get_image")
