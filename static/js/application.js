@@ -12,8 +12,13 @@ $(document).ready(function(){
      
     var str1 = "data:image/png;base64,";
 
+    $("#start").prop('disabled', false);
+    $("#stop").prop('disabled', true);
+
     //receive details from server
   $('#start').on('click',function(){
+        $("#start").prop('disabled', true);
+        $("#stop").prop('disabled', false);
         socket=io.connect('http://' + document.domain + ':' + location.port + '/test');
         socket.connect();
         socket.on('newnumber', function(msg) {
@@ -56,6 +61,8 @@ $(document).ready(function(){
 
 
   $('#stop').on('click',function(){
+        $("#start").prop('disabled', false);
+        $("#stop").prop('disabled', true);
         socket.disconnect();
         console.log("stopping");
   });
