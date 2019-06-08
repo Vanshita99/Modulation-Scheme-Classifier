@@ -201,6 +201,13 @@ def test_disconnect():
 @app.route("/settings/<string:data>")
 def recieve_settings(data):
     print(data)
+    import json
+    json_data = json.load(data)
+    print(type(json_data))
+    if json_data['cnn']:
+        print("Set cnn")
+    elif json_data['lstm']:
+        print("Set lstm")
     return Response("I got it",mimetype="text")
 
 
