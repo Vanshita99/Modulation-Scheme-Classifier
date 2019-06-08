@@ -2,7 +2,7 @@ var socket;
 function send_settings(data){
     console.log("Sending settings with data = " + data);
     $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
-    alert("Data: " + data + "\nStatus: " + status);
+    // alert("Data: " + data + "\nStatus: " + status);
   });
 }
 
