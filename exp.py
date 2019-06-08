@@ -79,14 +79,14 @@ class RandomThread(Thread):
             return "8-PAM"
     
     def loading_model_cnn(self):
-        json_file = open("model_cnn", 'r')
+        json_file = open("model_cnn.json", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("loading model for cnn")
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
         print("loaded_weights cnn")
-        loaded_model.load_weights("weights_cnn")
+        loaded_model.load_weights("weights_cnn.hdf5")
         print("Loaded model from disk cnn")
         # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
@@ -95,14 +95,14 @@ class RandomThread(Thread):
         return loaded_model
 
     def loading_model_lstm(self):
-        json_file = open("model_lstm", 'r')
+        json_file = open("model_lstm.json", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("loading model for lstm")
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
         print("loaded_weights lstm")
-        loaded_model.load_weights("weights_lstm")
+        loaded_model.load_weights("weights_lstm.hdf5")
         print("Loaded model from disk lstm")
         # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
