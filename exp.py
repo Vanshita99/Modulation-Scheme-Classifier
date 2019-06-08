@@ -25,8 +25,7 @@ from keras import backend as K
 thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
-
-
+selected_model = "lstm"
 
 
 __author__ = 'slynn'
@@ -79,19 +78,35 @@ class RandomThread(Thread):
         else:
             return "8-PAM"
     
-    def loading_model(self):
-        json_file = open('model.json', 'r')
+    def loading_model_cnn(self):
+        json_file = open("model_cnn", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
-        print("load_model")
+        print("loading model for cnn")
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
-        print("loaded_weights")
-        loaded_model.load_weights("./Coms_d1.hdf5")
-        print("Loaded model from disk")
+        print("loaded_weights cnn")
+        loaded_model.load_weights("weights_cnn")
+        print("Loaded model from disk cnn")
         # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-        print("model_compiled")
+        print("model_compiled for cnn")
+        
+        return loaded_model
+
+    def loading_model_lstm(self):
+        json_file = open("model_lstm", 'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+        print("loading model for lstm")
+        loaded_model = model_from_json(loaded_model_json)
+        # load weights into new model
+        print("loaded_weights lstm")
+        loaded_model.load_weights("weights_lstm")
+        print("Loaded model from disk lstm")
+        # evaluate loaded model on test data
+        loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        print("model_compiled lstm")
         
         return loaded_model
     
@@ -119,7 +134,8 @@ class RandomThread(Thread):
         i=0
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        loaded_model=self.loading_model()
+        loaded_model_cnn=self.loading_model_cnn()
+        loaded_model_lstm=self.loading_model_lstm()
         while not thread_stop_event.isSet():
             if not thread_loop_condition:
                 continue
@@ -135,7 +151,10 @@ class RandomThread(Thread):
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
                 to_be_classified=np.asarray(z)
-                modulation_schemes=self.classifier(to_be_classified,loaded_model)
+                if selected_model == "cnn":
+                    modulation_schemes=self.classifier(to_be_classified,loaded_model_cnn)
+                else:
+                    modulation_schemes=self.classifier(to_be_classified,loaded_model_lstm)
                 x=np.arange(x_signal.shape[0])
                 y=x_signal
                 ax.plot(x,y)
@@ -200,13 +219,16 @@ def test_disconnect():
     
 @app.route("/settings/<string:data>")
 def recieve_settings(data):
+    global selected_model
     print(data)
     import json
     json_data = json.loads(data)
     print(type(json_data))
     if json_data['cnn']:
+        selected_model = "cnn"
         return Response("Backend : setting model type to cnn",mimetype="text")
     elif json_data['lstm']:
+        selected_model = "lstm"
         return Response("Backend : setting model type to lstm",mimetype="text")
     return Response("I got it. But could not select anything",mimetype="text")
 
