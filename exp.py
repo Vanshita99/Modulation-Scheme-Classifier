@@ -112,6 +112,8 @@ class RandomThread(Thread):
     
     def classifier(self,to_be_classified,loaded_model):
         
+        if selected_model=="cnn":
+            to_be_classified.reshape(-1,256,2,1)
         labels=loaded_model.predict_classes(to_be_classified)
         string_labels=np.array([])
         for i in range(to_be_classified.shape[0]):
