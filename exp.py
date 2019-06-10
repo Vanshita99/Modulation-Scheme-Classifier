@@ -113,7 +113,7 @@ class RandomThread(Thread):
     def classifier(self,to_be_classified,loaded_model):
         
         if selected_model=="cnn":
-            to_be_classified.reshape(-1,256,2,1)
+           to_be_classified = to_be_classified.reshape(2,256,2,1)
         labels=loaded_model.predict_classes(to_be_classified)
         string_labels=np.array([])
         for i in range(to_be_classified.shape[0]):
@@ -143,7 +143,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z=eng.testFunction(nargout=6)
+                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(nargout=6)
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
@@ -152,7 +152,12 @@ class RandomThread(Thread):
                 bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
-                to_be_classified=np.asarray(z)
+		if selected_model == "cnn":
+		   to_be_classified=np.asarray(z_IQ)
+		else:
+		  to_be_classified=np.asarray(z_AP)
+
+
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(to_be_classified,loaded_model_cnn)
                 else:
