@@ -113,7 +113,7 @@ class RandomThread(Thread):
     def classifier(self,to_be_classified,loaded_model):
         
         if selected_model=="cnn":
-           to_be_classified = to_be_classified.reshape(2,256,2,1)
+            to_be_classified = to_be_classified.reshape(2,256,2,1)
         labels=loaded_model.predict_classes(to_be_classified)
         string_labels=np.array([])
         for i in range(to_be_classified.shape[0]):
@@ -153,9 +153,9 @@ class RandomThread(Thread):
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
 		if selected_model == "cnn":
-                   to_be_classified=np.asarray(z_IQ)
+                    to_be_classified=np.asarray(z_IQ)
 		else:
-		  to_be_classified=np.asarray(z_AP)
+		    to_be_classified=np.asarray(z_AP)
 
 
                 if selected_model == "cnn":
