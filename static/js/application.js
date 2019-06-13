@@ -26,7 +26,7 @@ $(document).ready(function(){
             
             $.ajax({url: "get_image", success: function(result){
                 $('#div_img').html("");
-                $('#div_img').html('<img class="img-responsive" style="width:80%; margin: auto;" src="data:image/png;base64,' + result + '" />');
+                $('#div_img').html('<img class="img-responsive" style="width:100%; margin: auto;" src="data:image/png;base64,' + result + '" />');
             }});
             
         });
