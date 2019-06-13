@@ -154,7 +154,6 @@ class RandomThread(Thread):
                 x_signal=x_signal.reshape((18271,))
                 to_be_classified=np.asarray(z_IQ)
 
-
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(to_be_classified,loaded_model_cnn)
                 else:
