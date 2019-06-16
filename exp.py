@@ -26,6 +26,7 @@ thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
 selected_model = "lstm"
+no_of_bands="one"
 
 
 __author__ = 'slynn'
@@ -233,8 +234,21 @@ def recieve_settings(data):
     elif json_data['lstm']:
         selected_model = "lstm"
         return Response("Backend : setting model type to lstm",mimetype="text")
+    handleBandChange(json_data)
     return Response("I got it. But could not select anything",mimetype="text")
-
+    
+def handleBandChange(json_data):
+    global no_of_bands
+    print("Handling band selection")
+    if json_data['band'] == 'one':
+        print("Selected band = one")
+        no_of_bands = "one"
+    elif json_data['band'] == 'two':
+        print("Selected band = two")
+        no_of_bands = "two"
+    elif json_data['band'] == 'three':
+        print("Selected band = three")
+        no_of_bands = "three"
 
 @app.route("/get_image")
 def get_image():
