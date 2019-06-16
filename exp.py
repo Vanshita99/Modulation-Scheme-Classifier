@@ -228,13 +228,13 @@ def recieve_settings(data):
     import json
     json_data = json.loads(data)
     print(type(json_data))
+    handleBandChange(json_data)
     if json_data['cnn']:
         selected_model = "cnn"
         return Response("Backend : setting model type to cnn",mimetype="text")
     elif json_data['lstm']:
         selected_model = "lstm"
         return Response("Backend : setting model type to lstm",mimetype="text")
-    handleBandChange(json_data)
     return Response("I got it. But could not select anything",mimetype="text")
     
 def handleBandChange(json_data):
