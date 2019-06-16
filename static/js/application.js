@@ -1,16 +1,69 @@
 var socket;
-function send_settings(data){
+
+var settings = new Object();
+
+function send_settings() {
+    data = JSON.stringify(settings);
     console.log("Sending settings with data = " + data);
     $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
     // alert("Data: " + data + "\nStatus: " + status);
   });
 }
+// function send_settings_no_of_bands(data){
+//     console.log("Sending settings with data = " + data);
+//     $.get('http://' + document.domain + ':' + location.port + '/settings_no_of_bands/'+data, function(data, status){
+//     // alert("Data: " + data + "\nStatus: " + status);
+//   });
+// }
 
+
+function initSettings() {
+  settings.cnn = false;
+  settings.lstm = true;
+  settings.band = 1;
+  // default values ....
+}
+
+// function set_bands_one() {
+//   var settingObject_bands = new Object();
+//   settingObject_bands.one = false;
+//   settingObject_bands = true;
+//   send_settings(JSON.stringify(settingObject));
+// }
+
+// function set_model_lstm() {
+//   var settingObject = new Object();
+//   settingObject.cnn = false;
+//   settingObject.lstm = true;
+//   send_settings(JSON.stringify(settingObject));
+// }
+
+// function set_model_lstm() {
+//   var settingObject = new Object();
+//   settingObject.cnn = false;
+//   settingObject.lstm = true;
+//   send_settings(JSON.stringify(settingObject));
+// }
+
+function set_model_cnn() {
+  // var settingObject = new Object();
+  settings.cnn = true;
+  settings.lstm = false;
+  send_settings();
+}
+
+function set_model_lstm() {
+  // var settingObject = new Object();
+  settings.cnn = false;
+  settings.lstm = true;
+  send_settings();
+}
 
 $(document).ready(function(){
     //connect to the socket server.
      
     var str1 = "data:image/png;base64,";
+    initSettings();
 
     $("#start").prop('disabled', false);
     $("#stop").prop('disabled', true);
@@ -42,21 +95,22 @@ $(document).ready(function(){
     }
   });
 
-  function set_model_cnn() {
-    var settingObject = new Object();
-    settingObject.cnn = true;
-    settingObject.lstm = false;
-    send_settings(JSON.stringify(settingObject));
-  }
 
-  function set_model_lstm() {
-    var settingObject = new Object();
-    settingObject.cnn = false;
-    settingObject.lstm = true;
-    send_settings(JSON.stringify(settingObject));
-  }
 
   
+
+
+  $('#band_selector').on('change',function() {
+    selectedBand = $("#band_selector").val();
+    console.log(selectedBand);
+    if(selectedBand != -1) {
+      // do something something
+      settings.band = selectedBand;
+      send_settings();
+    }
+  });
+
+
 
 
 
