@@ -158,6 +158,15 @@ class RandomThread(Thread):
                 A.shape
                 print(A)
 
+                B=np.zeros(2,256,2)
+                B[0,:,0]=A[0,:,0]
+                B[0,:,1]=A[1,:,0]
+                B[1,:,0]=A[0,:,1]
+                B[1,:,1]=A[1,:,1]
+
+                B.shape
+                print(B)
+
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(to_be_classified,loaded_model_cnn)
                 else:
