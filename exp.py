@@ -144,7 +144,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ =eng.testFunction(nargout=6)
+                a,v,w,x,BW,z_IQ,A =eng.testFunction(nargout=7)
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
@@ -154,6 +154,9 @@ class RandomThread(Thread):
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
                 to_be_classified=np.asarray(z_IQ)
+                A=np.asarray(A)
+                A.shape
+                print(A)
 
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(to_be_classified,loaded_model_cnn)
