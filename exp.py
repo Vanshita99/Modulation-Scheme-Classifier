@@ -158,7 +158,7 @@ class RandomThread(Thread):
                 print(A.shape)
                 print(A)
 
-                B=np.zeros(2,256,2)
+                B=np.zeros((2,256,2))
                 B[0,:,0]=A[0,:,0]
                 B[0,:,1]=A[1,:,0]
                 B[1,:,0]=A[0,:,1]
