@@ -145,7 +145,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,A =eng.testFunction(nargout=7)
+                a,v,w,x,BW,z_IQ,A,z_AP =eng.testFunction(nargout=8)
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
@@ -154,7 +154,10 @@ class RandomThread(Thread):
                 bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
-                to_be_classified=np.asarray(z_IQ)
+                if selected_model="cnn":
+                    to_be_classified=np.asarray(z_IQ)
+                else
+                    to_be_classified=np.asarray(z_AP)
                 A=np.asarray(A)
                 print(A.shape)
                 print(A)
