@@ -39,7 +39,7 @@ app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
 #random number Generator Thread
-
+eng = matlab.engine.start_matlab()
 
 class RandomThread(Thread):
     def __init__(self):
@@ -127,7 +127,7 @@ class RandomThread(Thread):
         Generate a random number every 1 second and emit to a socketio instance (broadcast)
         Ideally to be run in a separate thread?
         """
-        eng = matlab.engine.start_matlab()
+        #eng = matlab.engine.start_matlab()
         band_idx=np.empty((2,1))
         bar_height=np.empty((2,1))
         y=np.empty((18271,))
@@ -255,12 +255,15 @@ def handleBandChange(json_data):
     if json_data['band'] == 'one':
         print("Selected band = one")
         no_of_bands = "one"
+        eng.set_no_of_bands(no_of_bands)
     elif json_data['band'] == 'two':
         print("Selected band = two")
         no_of_bands = "two"
+        eng.set_no_of_bands(no_of_bands)
     elif json_data['band'] == 'three':
         print("Selected band = three")
         no_of_bands = "three"
+        eng.set_no_of_bands(no_of_bands)
 
 @app.route("/get_image")
 def get_image():
