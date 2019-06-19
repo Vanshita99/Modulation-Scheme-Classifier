@@ -26,7 +26,7 @@ thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
 selected_model = "lstm"
-no_of_bands="one"
+no_of_bands=1
 
 
 __author__ = 'slynn'
@@ -39,6 +39,7 @@ app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
 #random number Generator Thread
+
 eng = matlab.engine.start_matlab()
 
 class RandomThread(Thread):
@@ -158,7 +159,7 @@ class RandomThread(Thread):
                 print(A.shape)
                 print(A)
 
-                B=np.zeros((2,256,2))
+                B=np.zeros((2,3,2))
                 B[0,:,0]=A[0,:,0]
                 B[0,:,1]=A[1,:,0]
                 B[1,:,0]=A[0,:,1]
@@ -254,15 +255,15 @@ def handleBandChange(json_data):
     print("Handling band selection")
     if json_data['band'] == 'one':
         print("Selected band = one")
-        no_of_bands = "one"
+        no_of_bands = 1
         eng.set_no_of_bands(no_of_bands)
     elif json_data['band'] == 'two':
         print("Selected band = two")
-        no_of_bands = "two"
+        no_of_bands = 2
         eng.set_no_of_bands(no_of_bands)
     elif json_data['band'] == 'three':
         print("Selected band = three")
-        no_of_bands = "three"
+        no_of_bands = 3
         eng.set_no_of_bands(no_of_bands)
 
 @app.route("/get_image")
