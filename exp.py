@@ -136,6 +136,7 @@ class RandomThread(Thread):
         modulation_schemes=np.empty((2,1))
         BW=1305.0714285714287   
         i=0
+        B=np.zeros((2,256,2))
         fig = plt.figure()
         ax = fig.add_subplot(111)
         loaded_model_cnn=self.loading_model_cnn()
@@ -158,23 +159,23 @@ class RandomThread(Thread):
                     to_be_classified=np.asarray(z_IQ)
                 else :
                     to_be_classified=np.asarray(z_AP)
-                A=np.asarray(A)
-                print(A.shape)
-                print(A)
+                #A=np.asarray(A)
+                print(to_be_classified.shape)
+                #print(to_be_classified)
 
-                B=np.zeros((2,3,2))
-                B[0,:,0]=A[0,:,0]
-                B[0,:,1]=A[1,:,0]
-                B[1,:,0]=A[0,:,1]
-                B[1,:,1]=A[1,:,1]
+                
+                B[0,:,0]=to_be_classified[0,:,0]
+                B[0,:,1]=to_be_classified[1,:,0]
+                B[1,:,0]=to_be_classified[0,:,1]
+                B[1,:,1]=to_be_classified[1,:,1]
 
                 print(B.shape)
-                print(B)
+                #print(B)
 
                 if selected_model == "cnn":
-                    modulation_schemes=self.classifier(to_be_classified,loaded_model_cnn)
+                    modulation_schemes=self.classifier(B,loaded_model_cnn)
                 else:
-                    modulation_schemes=self.classifier(to_be_classified,loaded_model_lstm)
+                    modulation_schemes=self.classifier(B,loaded_model_lstm)
                 x=np.arange(x_signal.shape[0])
                 y=x_signal
                 ax.plot(x,y)
