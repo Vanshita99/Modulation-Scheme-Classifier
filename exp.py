@@ -156,7 +156,7 @@ class RandomThread(Thread):
                 x_signal=x_signal.reshape((18271,))
                 if selected_model=="cnn":
                     to_be_classified=np.asarray(z_IQ)
-                else
+                else :
                     to_be_classified=np.asarray(z_AP)
                 A=np.asarray(A)
                 print(A.shape)
