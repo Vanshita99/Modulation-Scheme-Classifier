@@ -154,7 +154,7 @@ class RandomThread(Thread):
                 bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
-                if selected_model="cnn":
+                if selected_model=="cnn":
                     to_be_classified=np.asarray(z_IQ)
                 else
                     to_be_classified=np.asarray(z_AP)
