@@ -33,14 +33,14 @@ $(document).ready(function(){
     //connect to the socket server.
      
     var str1 = "data:image/png;base64,";
-    //initSettings();
+    initSettings();
 
     $("#start").prop('disabled', false);
     $("#stop").prop('disabled', true);
 
     //receive details from server
   $('#start').on('click',function(){
-        initSettings();
+        //initSettings();
         $("#start").prop('disabled', true);
         $("#stop").prop('disabled', false);
         socket=io.connect('http://' + document.domain + ':' + location.port + '/test');
