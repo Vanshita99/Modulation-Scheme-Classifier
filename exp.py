@@ -146,7 +146,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,A,z_AP =eng.testFunction(nargout=8)
+                a,v,w,x,BW,z_IQ,A,z_AP =eng.testFunction(no_of_bands,nargout=8)
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
@@ -266,7 +266,7 @@ def handleBandChange(json_data):
     elif json_data['band'] == 'three':
         print("Selected band = three")
         no_of_bands = 3
-    eng.set_no_of_bands(no_of_bands)
+    #eng.set_no_of_bands(no_of_bands)
 
 @app.route("/get_image")
 def get_image():
