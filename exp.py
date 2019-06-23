@@ -146,7 +146,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,A,z_AP =eng.testFunction(no_of_bands,nargout=8)
+                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,nargout=7)
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
