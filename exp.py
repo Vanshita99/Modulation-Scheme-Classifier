@@ -260,15 +260,13 @@ def handleBandChange(json_data):
     if json_data['band'] == 'one':
         print("Selected band = one")
         no_of_bands = 1
-        eng.set_no_of_bands(no_of_bands)
     elif json_data['band'] == 'two':
         print("Selected band = two")
         no_of_bands = 2
-        eng.set_no_of_bands(no_of_bands)
     elif json_data['band'] == 'three':
         print("Selected band = three")
         no_of_bands = 3
-        eng.set_no_of_bands(no_of_bands)
+    eng.set_no_of_bands(no_of_bands)
 
 @app.route("/get_image")
 def get_image():

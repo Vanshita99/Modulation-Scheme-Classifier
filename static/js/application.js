@@ -14,6 +14,7 @@ function initSettings() {
   settings.cnn = false;
   settings.lstm = true;
   settings.band = 'one';
+  send_settings();
 }
 
 function set_model_cnn() {
