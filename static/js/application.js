@@ -13,7 +13,7 @@ function send_settings() {
 function initSettings() {
   settings.cnn = false;
   settings.lstm = true;
-  settings.band = 'one';
+  settings.band = 'two';
   send_settings();
 }
 

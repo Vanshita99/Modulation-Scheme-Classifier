@@ -26,7 +26,7 @@ thread = Thread()
 thread_stop_event = Event()
 thread_loop_condition=False
 selected_model = "lstm"
-no_of_bands=1
+no_of_bands=2
 
 
 __author__ = 'slynn'
