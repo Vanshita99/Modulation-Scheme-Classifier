@@ -150,6 +150,7 @@ class RandomThread(Thread):
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
+                print(band.shape)
                 band_idx=band_idx.reshape((band_idx.shape[1],1))
                 bar_height=np.asarray(w)
                 bar_height=bar_height.reshape((bar_height.shape[1],1))          
