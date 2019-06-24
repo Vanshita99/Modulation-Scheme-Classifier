@@ -14,6 +14,7 @@ function initSettings() {
   settings.cnn = false;
   settings.lstm = true;
   settings.band = 'two';
+  settings.channel='Rayleigh';
   send_settings();
 }
 
@@ -73,6 +74,16 @@ $(document).ready(function(){
     if(selectedBand != -1) {
       // do something something
       settings.band = selectedBand;
+      send_settings();
+    }
+  });
+
+  $('#channel_selector').on('change',function() {
+    selectedChannel = $("#channel_selector").val();
+    console.log(selectedChannel);
+    if(selectedChannel != -1) {
+      // do something something
+      settings.channel = selectedChannel;
       send_settings();
     }
   });

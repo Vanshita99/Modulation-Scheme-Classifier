@@ -27,6 +27,7 @@ thread_stop_event = Event()
 thread_loop_condition=False
 selected_model = "lstm"
 no_of_bands=2
+channel=1
 
 
 __author__ = 'slynn'
@@ -146,7 +147,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,nargout=7)
+                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,nargout=7)
                 actual_integer=np.asarray(a)
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                 band_idx=np.asarray(v)
@@ -267,7 +268,22 @@ def handleBandChange(json_data):
     elif json_data['band'] == 'three':
         print("Selected band = three")
         no_of_bands = 3
-    #eng.set_no_of_bands(no_of_bands)
+
+
+def handleChannelChange(json_data):
+    global channel
+    print("Handling channel selection")
+    if json_data['channel'] == 'AWGN':
+        print("Selected CHANNEL = AWGN")
+        channel = 0
+    elif json_data['band'] == 'Rayleigh':
+        print("Selected channel = Rayleigh")
+        channel=1
+    elif json_data['band'] == 'Rayleigh with doppler':
+        print("Selected channel = Rayleigh with doppler")
+        channel=2
+    
+
 
 @app.route("/get_image")
 def get_image():
