@@ -277,19 +277,20 @@ def handleChannelChange(json_data):
     if json_data['channel'] == 'AWGN':
         print("Selected CHANNEL = AWGN")
         channel = 0
-    elif json_data['band'] == 'Rayleigh + AWGN':
+    elif json_data['channel'] == 'Rayleigh + AWGN':
         print("Selected channel = Rayleigh with awgn")
         channel=1
-    elif json_data['band'] == 'Rayleigh + Doppler + AWGN':
+    elif json_data['channel'] == 'Rayleigh + Doppler + AWGN':
         print("Selected channel = Rayleigh with doppler with awgn")
         channel=2
-    elif json_data['band'] == 'Rician + AWGN':
+    elif json_data['channel'] == 'Rician + AWGN':
         print("Selected channel = Rician with awgn")
         channel=3
-    elif json_data['band'] == 'Rician + Doppler + AWGN':
+    elif json_data['channel'] == 'Rician + Doppler + AWGN':
         print("Selected channel = Rician with doppler with awgn")
         channel=4
-    
+    else:
+        print("None matched")
 
 
 @app.route("/get_image")
