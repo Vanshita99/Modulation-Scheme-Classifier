@@ -14,7 +14,7 @@ function initSettings() {
   settings.cnn = false;
   settings.lstm = true;
   settings.band = 'two';
-  settings.channel='Rayleigh';
+  settings.channel='AWGN';
   send_settings();
 }
 

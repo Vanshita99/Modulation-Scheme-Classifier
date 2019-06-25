@@ -27,7 +27,7 @@ thread_stop_event = Event()
 thread_loop_condition=False
 selected_model = "lstm"
 no_of_bands=2
-channel=1
+channel=0
 
 
 __author__ = 'slynn'
@@ -276,12 +276,18 @@ def handleChannelChange(json_data):
     if json_data['channel'] == 'AWGN':
         print("Selected CHANNEL = AWGN")
         channel = 0
-    elif json_data['band'] == 'Rayleigh':
-        print("Selected channel = Rayleigh")
+    elif json_data['band'] == 'Rayleigh + AWGN':
+        print("Selected channel = Rayleigh with awgn")
         channel=1
-    elif json_data['band'] == 'Rayleigh with doppler':
-        print("Selected channel = Rayleigh with doppler")
+    elif json_data['band'] == 'Rayleigh + Doppler + AWGN':
+        print("Selected channel = Rayleigh with doppler with awgn")
         channel=2
+    elif json_data['band'] == 'Rician + AWGN':
+        print("Selected channel = Rician with awgn")
+        channel=3
+    elif json_data['band'] == 'Rician + Doppler + AWGN':
+        print("Selected channel = Rician with doppler with awgn")
+        channel=4
     
 
 
