@@ -124,20 +124,27 @@ class RandomThread(Thread):
         string_labels=string_labels.reshape((to_be_classified.shape[0],1))
         return string_labels    
 
+
+    def reshapeToBeClassified(self,to_be_classified):
+        B=np.zeros((no_of_bands,256,2))
+        for i in range(0,no_of_bands):
+            B[i,]=np.concatenate((to_be_classified[0,:,j],to_be_classified[1,:,j]), axis=1)
+        return B
+
     def randomNumberGenerator(self):
         """
         Generate a random number every 1 second and emit to a socketio instance (broadcast)
         Ideally to be run in a separate thread?
         """
         #eng = matlab.engine.start_matlab()
-        band_idx=np.empty((2,1))
-        bar_height=np.empty((2,1))
+        band_idx=np.empty((no_of_bands,1))
+        bar_height=np.empty((no_of_bands,1))
         y=np.empty((18271,))
         x=np.empty((18271,))
-        modulation_schemes=np.empty((2,1))
+        modulation_schemes=np.empty((no_of_bands,1))
         BW=1305.0714285714287   
         i=0
-        B=np.zeros((2,256,2))
+        #B=np.zeros((2,256,2))
         fig = plt.figure()
         ax = fig.add_subplot(111)
         loaded_model_cnn=self.loading_model_cnn()
@@ -166,13 +173,13 @@ class RandomThread(Thread):
                 #print(to_be_classified)
 
                 
-                B[0,:,0]=to_be_classified[0,:,0]
-                B[0,:,1]=to_be_classified[1,:,0]
-                B[1,:,0]=to_be_classified[0,:,1]
-                B[1,:,1]=to_be_classified[1,:,1]
-
+                # B[0,:,0]=to_be_classified[0,:,0]
+                # B[0,:,1]=to_be_classified[1,:,0]
+                # B[1,:,0]=to_be_classified[0,:,1]
+                # B[1,:,1]=to_be_classified[1,:,1]
+                B=self.reshapeToBeClassified(to_be_classified)
                 print(B.shape)
-                #print(B)
+                print(B)
 
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(B,loaded_model_cnn)
@@ -186,7 +193,7 @@ class RandomThread(Thread):
                 ax.clear()
             else:
                 ax.plot(x,y)
-                for j in range(2):
+                for j in range(no_of_bands):
                     actual=self.numeric_to_string_actual(actual_integer[j][0])
                     BN1=band_idx[j][0]
                     BW1=BW
