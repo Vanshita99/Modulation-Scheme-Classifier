@@ -128,7 +128,7 @@ class RandomThread(Thread):
     def reshapeToBeClassified(self,to_be_classified):
         B=np.zeros((no_of_bands,256,2))
         for i in range(0,no_of_bands):
-            B[i,]=np.concatenate((to_be_classified[0,:,j],to_be_classified[1,:,j]), axis=1)
+            B[i,]=np.concatenate((to_be_classified[0,:,i],to_be_classified[1,:,i]), axis=1)
         return B
 
     def randomNumberGenerator(self):
