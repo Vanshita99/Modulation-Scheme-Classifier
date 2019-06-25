@@ -248,6 +248,7 @@ def recieve_settings(data):
     json_data = json.loads(data)
     print(type(json_data))
     handleBandChange(json_data)
+    handleChannelChange(json_data)
     if json_data['cnn']:
         selected_model = "cnn"
         return Response("Backend : setting model type to cnn",mimetype="text")
