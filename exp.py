@@ -155,7 +155,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,"nargout=7)
+                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,"nargout=7")
                 actual_integer=np.asarray(a)     #handle it later
                 band_idx=np.asarray(v)
                 bar_height=np.asarray(w)
