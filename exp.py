@@ -169,7 +169,7 @@ class RandomThread(Thread):
                 print(to_be_classified.shape)
                 
                 if no_of_bands == 1:
-                    actual_integer=actual_integer.reshape((1,1))
+                    #actual_integer=actual_integer.reshape((1,1))
                     band_idx=band_idx.reshape((1,1))
                     bar_height=bar_height.reshape((1,1))
 
