@@ -113,15 +113,15 @@ class RandomThread(Thread):
         
         return loaded_model
     
-    def classifier(self,to_be_classified,loaded_model):
+    def classifier(self,B,loaded_model):
         
         if selected_model=="cnn":
-            to_be_classified = to_be_classified.reshape(2,256,2,1)
-        labels=loaded_model.predict_classes(to_be_classified)
+            B = B.reshape(no_of_bands,256,2,1)
+        labels=loaded_model.predict_classes(B)
         string_labels=np.array([])
-        for i in range(to_be_classified.shape[0]):
+        for i in range(B.shape[0]):
             string_labels=np.append(string_labels,self.numeric_to_string(labels[i]))
-        string_labels=string_labels.reshape((to_be_classified.shape[0],1))
+        string_labels=string_labels.reshape((B.shape[0],1))
         return string_labels    
 
 
@@ -154,12 +154,19 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,nargout=7)
+                a,v,w,x,BW,z_IQ,z_AP,A =eng.testFunction(no_of_bands,channel,nargout=8)
                 actual_integer=np.asarray(a)     #handle it later
                 band_idx=np.asarray(v)
                 bar_height=np.asarray(w)
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
+
+                A=np.asarray(A)
+                print(A)
+                A=A.T
+                A=A.reshape(1,3,2)
+                print(A)
+
                 if selected_model=="cnn":
                     to_be_classified=np.asarray(z_IQ)
                 else :
@@ -172,7 +179,9 @@ class RandomThread(Thread):
                     #actual_integer=actual_integer.reshape((1,1))
                     band_idx=band_idx.reshape((1,1))
                     bar_height=bar_height.reshape((1,1))
-
+                    to_be_classified=to_be_classified.T
+                    B=to_be_classified.reshape(1,256,2)
+                    
 
 
                 actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
