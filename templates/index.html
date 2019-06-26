@@ -11,41 +11,7 @@
     <title>Signal_App</title>
   </head>
   <body>
-    <!-- <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-4">
-          <button type="button" id="start" class="text-center btn btn-lg btn-outline-success">Start</button>
-        </div>
-        <div class="col-4">
-          <button type="button" id="stop" class="text-center btn btn-lg btn-outline-danger">Stop</button>
-        </div>
-      </div>
-     
     
-       <div id="div_img" class="text-center"></div>
-    </div> -->
-<!-- 
-    <div class="container" role="main">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="center-block" style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
-              <p>Start / stop prediction:</p>
-              <button type="submit" id="start" class="btn btn-sm btn-success">Start</button>
-              <button type="submit" id="stop" class="btn btn-sm btn-danger">Stop</button>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="settings" id="settings" style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
-            <p>Select model type to use for prediction:</p>
-            <input type="radio" name="model_type" value="cnn"> CNN &nbsp; &nbsp;
-            <input type="radio" name="model_type" value="lstm" checked> LSTM <br>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div id="div_img" class="text-center"></div>
-        </div>
-      </div>
-    </div> -->
 
     <div class="container" role="main">
       <div class="row">
@@ -89,8 +55,8 @@
                 <option value="three">Three</option>
                 <option value="one">One</option>
               </select>
-            </div>
 
+            </div>
             <div class="col-md-6">
               Select scheme:
               <select name="channel_selector" id="channel_selector">
@@ -102,6 +68,22 @@
                 <option value="Rician + Doppler + AWGN">Rician + Doppler + AWGN</option>
               </select>
             </div>
+
+            <div class="col-md-6">
+              Select SNR:
+              <select name="SNR_selector" id="SNR_selector">
+                <!-- <option value="-1">Select no of bands</option> -->
+                <option value=25 checked>25</option>
+                <option value=-10>-10</option>
+                <option value=-5>-5</option>
+                <option value=0>0</option>
+                <option value=5>5</option>
+                <option value=10>10</option>
+                <option value=15>15</option>
+                <option value=20>20</option>
+              </select>
+            </div>
+            
 
 
             

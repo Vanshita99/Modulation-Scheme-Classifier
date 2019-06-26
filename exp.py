@@ -28,6 +28,7 @@ thread_loop_condition=False
 selected_model = "lstm"
 no_of_bands=2
 channel=0
+SNR=25
 
 
 __author__ = 'slynn'
@@ -154,7 +155,7 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,nargout=7)
+                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
                 actual_integer=np.asarray(a)     #handle it later
                 band_idx=np.asarray(v)
                 bar_height=np.asarray(w)
@@ -262,6 +263,7 @@ def recieve_settings(data):
     print(type(json_data))
     handleBandChange(json_data)
     handleChannelChange(json_data)
+    handleSNRChange(json_data)
     if json_data['cnn']:
         selected_model = "cnn"
         return Response("Backend : setting model type to cnn",mimetype="text")
@@ -304,6 +306,36 @@ def handleChannelChange(json_data):
         channel=4
     else:
         print("None matched")
+
+
+def handleSNRChange(json_data):
+    global SNR
+    print("Handling SNR selection")
+    if json_data['SNR'] == 25:
+        print("Selected SNR = 25")
+        SNR = 25
+    elif json_data['SNR'] == 20:
+        print("Selected SNR = 20")
+        SNR = 20
+    elif json_data['band'] == 15:
+        print("Selected SNR = 15")
+        SNR = 15
+    elif json_data['SNR'] == 10:
+        print("Selected SNR = 10")
+        SNR = 10
+    elif json_data['SNR'] ==  5:
+        print("Selected SNRband = 5")
+        SNR = 5
+    elif json_data['SNR'] == 0:
+        print("Selected SNR = 0")
+        SNR = 0
+    elif json_data['SNR'] == -5:
+        print("Selected SNR = -5")
+        SNR = -5
+    elif json_data['SNR'] == -10:
+        print("Selected SNR = -10")
+        SNR = -10
+    
 
 
 @app.route("/get_image")

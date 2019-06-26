@@ -15,6 +15,7 @@ function initSettings() {
   settings.lstm = true;
   settings.band = 'two';
   settings.channel='AWGN';
+  settings.SNR=25
   send_settings();
 }
 
@@ -87,6 +88,17 @@ $(document).ready(function(){
       send_settings();
     }
   });
+
+  $('#SNR_selector').on('change',function() {
+    selectedSNR = $("#SNR_selector").val();
+    console.log(selectedSNR);
+    if(selectedSNR != -1) {
+      // do something something
+      settings.SNR = selectedSNR;
+      send_settings();
+    }
+  });
+
 
   $('#stop').on('click',function(){
         $("#start").prop('disabled', false);
