@@ -180,6 +180,7 @@ class RandomThread(Thread):
                 bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 B=self.reshapeToBeClassified(to_be_classified)
 
+                print(band_idx.shape)
 
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(B,loaded_model_cnn)
