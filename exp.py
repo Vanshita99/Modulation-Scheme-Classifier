@@ -176,13 +176,11 @@ class RandomThread(Thread):
                     bar_height=bar_height.reshape((1,1))
                     to_be_classified=to_be_classified.T
                     B=to_be_classified.reshape(1,256,2)
-                    
-
-
-                actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
-                band_idx=band_idx.reshape((band_idx.shape[1],1))
-                bar_height=bar_height.reshape((bar_height.shape[1],1))          
-                B=self.reshapeToBeClassified(to_be_classified)
+                else:    
+                    actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
+                    band_idx=band_idx.reshape((band_idx.shape[1],1))
+                    bar_height=bar_height.reshape((bar_height.shape[1],1))          
+                    B=self.reshapeToBeClassified(to_be_classified)
 
                 print(band_idx.shape)
 
