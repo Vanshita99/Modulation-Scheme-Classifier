@@ -15,7 +15,7 @@ function initSettings() {
   settings.lstm = true;
   settings.band = 'two';
   settings.channel='AWGN';
-  settings.SNR='25';
+  settings.snr='25';
   send_settings();
 }
 
@@ -94,7 +94,7 @@ $(document).ready(function(){
     console.log(selectedSNR);
     if(selectedSNR != -1) {
       // do something something
-      settings.SNR = selectedSNR;
+      settings.snr = selectedSNR;
       send_settings();
     }
   });
