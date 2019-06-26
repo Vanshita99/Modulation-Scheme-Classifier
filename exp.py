@@ -155,36 +155,39 @@ class RandomThread(Thread):
             plt.pause(1)
             if i%2==0:
                 a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,nargout=7)
-                actual_integer=np.asarray(a)
-                actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
+                actual_integer=np.asarray(a)     #handle it later
                 band_idx=np.asarray(v)
-                print(band_idx.shape)
-                band_idx=band_idx.reshape((band_idx.shape[1],1))
                 bar_height=np.asarray(w)
-                bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
                 if selected_model=="cnn":
                     to_be_classified=np.asarray(z_IQ)
                 else :
                     to_be_classified=np.asarray(z_AP)
-                #A=np.asarray(A)
-                print(to_be_classified.shape)
-                #print(to_be_classified)
 
+                print(x_signal.shape)
+                print(to_be_classified.shape)
                 
-                # B[0,:,0]=to_be_classified[0,:,0]
-                # B[0,:,1]=to_be_classified[1,:,0]
-                # B[1,:,0]=to_be_classified[0,:,1]
-                # B[1,:,1]=to_be_classified[1,:,1]
+                if no_of_bands == 1:
+                    actual_integer=actual_integer.reshape((1,1))
+                    band_idx=band_idx.reshape((1,1))
+                    bar_height=bar_height.reshape((1,1))
+
+
+
+                actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
+                band_idx=band_idx.reshape((band_idx.shape[1],1))
+                bar_height=bar_height.reshape((bar_height.shape[1],1))          
                 B=self.reshapeToBeClassified(to_be_classified)
-                print(B.shape)
-                print(B)
+
 
                 if selected_model == "cnn":
                     modulation_schemes=self.classifier(B,loaded_model_cnn)
                 else:
                     modulation_schemes=self.classifier(B,loaded_model_lstm)
+
+
+
                 x=np.arange(x_signal.shape[0])
                 y=x_signal
                 ax.plot(x,y)
