@@ -154,18 +154,13 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             if i%2==0:
-                a,v,w,x,BW,z_IQ,z_AP,A =eng.testFunction(no_of_bands,channel,nargout=8)
+                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,nargout=7)
                 actual_integer=np.asarray(a)     #handle it later
                 band_idx=np.asarray(v)
                 bar_height=np.asarray(w)
                 x_signal=np.asarray(x)
                 x_signal=x_signal.reshape((18271,))
 
-                A=np.asarray(A)
-                print(A)
-                A=A.T
-                A=A.reshape(1,3,2)
-                print(A)
 
                 if selected_model=="cnn":
                     to_be_classified=np.asarray(z_IQ)
