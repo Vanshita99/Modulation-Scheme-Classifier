@@ -311,28 +311,28 @@ def handleChannelChange(json_data):
 def handleSNRChange(json_data):
     global SNR
     print("Handling SNR selection")
-    if json_data['SNR'] == "25":
+    if json_data['snr'] == "25":
         print("Selected SNR = 25")
         SNR = 25
-    elif json_data['SNR'] == "20":
+    elif json_data['snr'] == "20":
         print("Selected SNR = 20")
         SNR = 20
     elif json_data['band'] == "15":
         print("Selected SNR = 15")
         SNR = 15
-    elif json_data['SNR'] == "10":
+    elif json_data['snr'] == "10":
         print("Selected SNR = 10")
         SNR = 10
-    elif json_data['SNR'] ==  "5":
+    elif json_data['snr'] ==  "5":
         print("Selected SNRband = 5")
         SNR = 5
-    elif json_data['SNR'] == "0":
+    elif json_data['snr'] == "0":
         print("Selected SNR = 0")
         SNR = 0
-    elif json_data['SNR'] == "-5":
+    elif json_data['snr'] == "-5":
         print("Selected SNR = -5")
         SNR = -5
-    elif json_data['SNR'] == "-10":
+    elif json_data['snr'] == "-10":
         print("Selected SNR = -10")
         SNR = -10
     
