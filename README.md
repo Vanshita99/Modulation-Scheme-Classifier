@@ -1,11 +1,6 @@
-# Modulation Scheme Classifier
+> #### Working of implemented system
 
-This app does something something.
+![](D:\Desktop\App flow.png)
 
-## One screenshot here
+------
 
-## How it works?
-
-## Team
-
-## Contact for bug fixes
