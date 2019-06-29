@@ -1,6 +1,6 @@
 > #### Working of implemented system
 
-![](D:\Desktop\App flow.png)
+![](static\images\App flow.png)
 
 ------
 
