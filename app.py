@@ -232,6 +232,12 @@ def index():
     #only by sending this page first will the client be connected to the socketio instance
     return render_template('index.html')
 
+
+@app.route('/about')
+def index():
+    #only by sending this page first will the client be connected to the socketio instance
+    return render_template('about.html')
+
 @socketio.on('connect', namespace='/test')
 def test_connect():
     # need visibility of the global thread object
