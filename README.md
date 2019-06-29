@@ -1,6 +1,6 @@
 > #### Working of implemented system
 
-![](static\images\App flow.png)
+![](static\images\app-flow.png)
 
 ------
 
