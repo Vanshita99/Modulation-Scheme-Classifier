@@ -1,13 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Signal_App</title>
+  </head>
+  <body>
+    
+
+    <div class="container" role="main">
+      <div class="row">
+        <div class="col-md-12">
+           <div class="center-block" style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
+              <p>Classification of Modulation Schemes</p>
+           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div id="div_img" ></div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="center-block" style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
+                <p>Start / stop prediction:</p>
+                <button type="submit" id="start" class="btn btn-sm btn-success">Start</button>
+                <button type="submit" id="stop" class="btn btn-sm btn-danger">Stop</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="settings" id="settings" style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
+                <p>Select model type to use for prediction:</p>
+                <input type="radio" name="model_type" value="cnn"> CNN &nbsp; &nbsp;
+                <input type="radio" name="model_type" value="lstm" checked> LSTM <br>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
+              Select number of bands:&nbsp;
+              <select name="band_selector" id="band_selector">
+                <!-- <option value="-1">Select no of bands</option> -->
+                <option value="two" checked>Two</option>
+                <option value="three">Three</option>
+                <option value="one">One</option>
+              </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
+              Select scheme:&nbsp;
+              <select name="channel_selector" id="channel_selector">
+                <!-- <option value="-1">Select no of bands</option> -->
+                <option value="AWGN" checked>AWGN</option>
+                <option value="Rayleigh + AWGN">Rayleigh + AWGN</option>
+                <option value="Rayleigh + Doppler + AWGN">Rayleigh + doppler + AWGN</option>
+                <option value="Rician + AWGN">Rician + AWGN</option>
+                <option value="Rician + Doppler + AWGN">Rician + Doppler + AWGN</option>
+              </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div style="text-align: center; background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
+              Select SNR:&nbsp;
+              <select name="SNR_selector" id="SNR_selector">
+                <!-- <option value="-1">Select no of bands</option> -->
+                <option value="25" checked>25</option>
+                <option value="-10">-10</option>
+                <option value="-5">-5</option>
+                <option value="0">0</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+              </div>
+            </div>
+          </div>
+            
+
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="static/js/application.js"></script>
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <div id="div_img"></div>
-    <button id="btn" type="button">Click Me!</button>
-</head>
-
+  </body>
 </html>
