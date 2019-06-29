@@ -233,7 +233,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route(namespace='/about')
+@app.route('/about')
 def about():
     #only by sending this page first will the client be connected to the socketio instance
     return render_template('about.html')
