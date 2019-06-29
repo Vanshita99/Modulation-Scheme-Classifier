@@ -228,6 +228,7 @@ class RandomThread(Thread):
 
 
 @app.route('/')
+@app.route('/home')
 def index():
     #only by sending this page first will the client be connected to the socketio instance
     return render_template('index.html')

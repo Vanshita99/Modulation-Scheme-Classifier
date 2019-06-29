@@ -27,7 +27,7 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ url_for('home')}}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('about')}}">About</a>
@@ -44,7 +44,7 @@
 </div>
     </nav>
 
-    <div class="center-block"  style=" margin-top: 110px; text-align: center; background: #ffff; padding: 10px; border-radius: 5px;">
+    <div class="center-block"  style=" margin-top: 90px; text-align: center; background: #ffff; padding: 10px; border-radius: 5px;">
         <h3>Working of implemented system</h3>
         <img src="static/images/app-flow.png">
     </div>
