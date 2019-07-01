@@ -173,7 +173,7 @@ class RandomThread(Thread):
                     print(to_be_classified.shape)
                     
                     if no_of_bands == 1:
-                        #actual_integer=actual_integer.reshape((1,1))
+                        actual_integer=actual_integer.reshape((1,1))
                         band_idx=band_idx.reshape((1,1))
                         bar_height=bar_height.reshape((1,1))
                         to_be_classified=to_be_classified.T
@@ -202,13 +202,13 @@ class RandomThread(Thread):
                 else:
                     ax.plot(x,y)
                     for j in range(no_of_bands):
-                        #actual=self.numeric_to_string_actual(actual_integer[j][0])
+                        actual=self.numeric_to_string_actual(actual_integer[j][0])
                         BN1=band_idx[j][0]
                         BW1=BW
                         height=bar_height[j][0]
                         ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
                         ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
-                        #ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
+                        ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
