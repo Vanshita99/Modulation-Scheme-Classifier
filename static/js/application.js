@@ -70,13 +70,14 @@ $(document).ready(function(){
 
 
   $('#band_selector').on('change',function() {
+    if (socket.connected){
     selectedBand = $("#band_selector").val();
     console.log(selectedBand);
     if(selectedBand != -1) {
       // do something something
       settings.band = selectedBand;
       send_settings();
-    }
+    }}
   });
 
   $('#channel_selector').on('change',function() {
