@@ -20,15 +20,17 @@ function initSettings() {
 }
 
 function set_model_cnn() {
-  settings.cnn = true;
-  settings.lstm = false;
-  send_settings();
+  if (socket.connected){
+        settings.cnn = true;
+        settings.lstm = false;
+        send_settings();}
 }
 
 function set_model_lstm() {
-  settings.cnn = false;
-  settings.lstm = true;
-  send_settings();
+  if (socket.connected){
+        settings.cnn = false;
+        settings.lstm = true;
+        send_settings();}
 }
 
 $(document).ready(function(){
@@ -70,13 +72,14 @@ $(document).ready(function(){
 
 
   $('#band_selector').on('change',function() {
+    if (socket.connected){
     selectedBand = $("#band_selector").val();
     console.log(selectedBand);
     if(selectedBand != -1) {
       // do something something
       settings.band = selectedBand;
       send_settings();
-    }
+    }}
   });
 
   $('#channel_selector').on('change',function() {
