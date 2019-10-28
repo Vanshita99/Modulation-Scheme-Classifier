@@ -8,7 +8,7 @@ function send_settings() {
     $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
   });
 
-    console.log("v2 socket is ",socket);
+    console.log("v3 socket is ",socket);
 }
 
 
@@ -74,11 +74,6 @@ $(document).ready(function(){
 
 
   $('#band_selector').on('change',function() {
-<<<<<<< HEAD
-    if (socket.connected){
-=======
-    
->>>>>>> 34098518a233ae3643d298df5f21511b2d8b76a1
     selectedBand = $("#band_selector").val();
     console.log(selectedBand);
     if(selectedBand != -1) {
