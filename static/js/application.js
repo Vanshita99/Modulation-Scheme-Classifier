@@ -8,7 +8,7 @@ function send_settings() {
     $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
   });
 
-    console.log("socket is ",socket);
+    console.log("v2 socket is ",socket);
 }
 
 
