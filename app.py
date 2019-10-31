@@ -106,7 +106,7 @@ class RandomThread(Thread):
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
         print("loaded_weights lstm")
-        if channel=0:
+        if channel==0:
             weight_file="demo_AWGN.hdf5"
             print("weights for awgn has been loaded")
         loaded_model.load_weights(weight_file)
