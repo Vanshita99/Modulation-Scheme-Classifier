@@ -80,7 +80,7 @@ $(document).ready(function(){
       // do something something
       settings.band = selectedBand;
       send_settings();
-    }}
+    }
   });
 
   $('#channel_selector').on('change',function() {
