@@ -8,7 +8,7 @@ function send_settings() {
     $.get('http://' + document.domain + ':' + location.port + '/settings/'+data, function(data, status){
   });
 
-    console.log("v2 socket is ",socket);
+    console.log("v3 socket is ",socket);
 }
 
 
@@ -74,14 +74,13 @@ $(document).ready(function(){
 
 
   $('#band_selector').on('change',function() {
-    
     selectedBand = $("#band_selector").val();
     console.log(selectedBand);
     if(selectedBand != -1) {
       // do something something
       settings.band = selectedBand;
       send_settings();
-    }
+    }}
   });
 
   $('#channel_selector').on('change',function() {
