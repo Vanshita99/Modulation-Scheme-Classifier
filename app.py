@@ -106,7 +106,10 @@ class RandomThread(Thread):
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
         print("loaded_weights lstm")
-        loaded_model.load_weights("weights_lstm.hdf5")
+        if channel=0:
+            weight_file="demo_AWGN.hdf5"
+            print("weights for awgn has been loaded")
+        loaded_model.load_weights(weight_file)
         print("Loaded model from disk lstm")
         # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
