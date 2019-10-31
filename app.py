@@ -19,7 +19,8 @@ import time
 import matlab.engine
 import sys
 from keras import backend as K
-
+from sklearn import preprocessing
+from sklearn.externals import joblib
 
 
 thread = Thread()
@@ -130,10 +131,21 @@ class RandomThread(Thread):
 
 
     def reshapeToBeClassified(self,to_be_classified):
-        B=np.zeros((no_of_bands,256,2))
-        for i in range(0,no_of_bands):
-            B[i,]=np.column_stack((to_be_classified[0,:,i],to_be_classified[1,:,i]))
-        return B
+        # B=np.zeros((no_of_bands,256,2))
+        # for i in range(0,no_of_bands):
+        #     B[i,]=np.column_stack((to_be_classified[0,:,i],to_be_classified[1,:,i]))
+        # return B
+        to_be_classified=to_be_classified.T
+        normalizer = joblib.load('normalizer.pkl')
+        a=normalizer.transform(to_be_classified[:,:,0])
+
+        max_abs_scaler = joblib.load('max_abs_scaler.pkl')
+        b=max_abs_scaler.transform(to_be_classified[:,:,1])
+
+        a=a.reshape(-1,256,1)
+        b=b.reshape(-1,256,1)
+        X1=np.concatenate((a,b),axis=-1)
+        return X1
 
     def randomNumberGenerator(self):
         """
