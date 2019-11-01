@@ -110,6 +110,12 @@ class RandomThread(Thread):
         if channel==0:
             weight_file="demo_AWGN.hdf5"
             print("weights for awgn has been loaded")
+        if channel==1:
+            weight_file="demo_Rayleigh.hdf5"
+            print("weights for rayleigh has been loaded")
+        if channel==3:
+            weight_file="demo_Racian.hdf5"
+            print("weights for racian has been loaded")
         loaded_model.load_weights(weight_file)
         print("Loaded model from disk lstm")
         # evaluate loaded model on test data
