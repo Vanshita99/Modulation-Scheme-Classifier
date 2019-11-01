@@ -171,8 +171,8 @@ class RandomThread(Thread):
         #B=np.zeros((2,256,2))
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        #loaded_model_cnn=self.loading_model_cnn()
-        #loaded_model_lstm=self.loading_model_lstm()
+        loaded_model_cnn=self.loading_model_cnn()
+        loaded_model_lstm=self.loading_model_lstm()
         while not thread_stop_event.isSet():
             if not thread_loop_condition:
                 continue
@@ -189,10 +189,8 @@ class RandomThread(Thread):
 
                     if selected_model=="cnn":
                         to_be_classified=np.asarray(z_IQ)
-                        loaded_model=self.loading_model_cnn()
                     else :
                         to_be_classified=np.asarray(z_AP)
-                        loaded_model=self.loading_model_lstm()
 
                     print(x_signal.shape)
                     print(to_be_classified.shape)
@@ -211,9 +209,10 @@ class RandomThread(Thread):
 
                     print(band_idx.shape)
 
-                    
-                    self.classifier(B,loaded_model)
-                   
+                    if selected_model == "cnn":
+                        modulation_schemes=self.classifier(B,loaded_model_cnn)
+                    else:
+                        modulation_schemes=self.classifier(B,loaded_model_lstm)
 
 
 
