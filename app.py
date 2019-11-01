@@ -98,30 +98,31 @@ class RandomThread(Thread):
         print("model_compiled for cnn")
         
         return loaded_model
-
+# do the same for cnn when you get the weights of awgn rayleigh and rician for cnn
     def loading_model_lstm(self):
         json_file = open("model_lstm.json", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("loading model for lstm")
         loaded_model = model_from_json(loaded_model_json)
-        # load weights into new model
-        print("loaded_weights lstm")
-        if channel==0:
-            weight_file="demo_AWGN.hdf5"
-            print("weights for awgn has been loaded")
-        if channel==1:
-            weight_file="demo_Rayleigh.hdf5"
-            print("weights for rayleigh has been loaded")
-        if channel==3:
-            weight_file="demo_Racian.hdf5"
-            print("weights for racian has been loaded")
-        loaded_model.load_weights(weight_file)
-        print("Loaded model from disk lstm")
-        # evaluate loaded model on test data
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         print("model_compiled lstm")
         
+        return loaded_model
+
+    def loading_model_lstm_awgn(self):
+        loaded_model=self.loading_model_lstm()
+        loaded_model.load_weights("demo_AWGN.hdf5")
+        return loaded_model
+
+    def loading_model_lstm_rayleigh(self):
+        loaded_model=self.loading_model_lstm()
+        loaded_model.load_weights("demo_Rayleigh.hdf5")
+        return loaded_model
+
+    def loading_model_lstm_rician(self):
+        loaded_model=self.loading_model_lstm()
+        loaded_model.load_weights("demo_Racian.hdf5")
         return loaded_model
     
     def classifier(self,B,loaded_model):
@@ -172,7 +173,10 @@ class RandomThread(Thread):
         fig = plt.figure()
         ax = fig.add_subplot(111)
         loaded_model_cnn=self.loading_model_cnn()
-        loaded_model_lstm=self.loading_model_lstm()
+        loaded_model_lstm_awgn=self.loading_model_lstm_awgn()
+        loaded_model_lstm_rayleigh=self.loading_model_lstm_rayleigh()
+        loaded_model_lstm_rician=self.loading_model_lstm_rician()
+
         while not thread_stop_event.isSet():
             if not thread_loop_condition:
                 continue
@@ -211,8 +215,16 @@ class RandomThread(Thread):
 
                     if selected_model == "cnn":
                         modulation_schemes=self.classifier(B,loaded_model_cnn)
-                    else:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm)
+                    if selected_model == "lstm"
+                        if channel==0:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
+                            print("awgn_lstm_weights_called")
+                        if channel==1:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh)
+                            print("rayleigh_lstm_weights_called")
+                        if channel==3:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
+                            print("rician_lstm_weights_called")
 
 
 
