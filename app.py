@@ -142,6 +142,8 @@ class RandomThread(Thread):
         #     B[i,]=np.column_stack((to_be_classified[0,:,i],to_be_classified[1,:,i]))
         # return B
         to_be_classified=to_be_classified.T
+        if no_of_bands==1:
+            to_be_classified=to_be_classified.reshape(1,256,2)
         normalizer = joblib.load('normalizer.pkl')
         a=normalizer.transform(to_be_classified[:,:,0])
 
@@ -197,8 +199,8 @@ class RandomThread(Thread):
                         actual_integer=actual_integer.reshape((1,1))
                         band_idx=band_idx.reshape((1,1))
                         bar_height=bar_height.reshape((1,1))
-                        to_be_classified=to_be_classified.T
-                        B=to_be_classified.reshape(1,256,2)
+                        #to_be_classified=to_be_classified.T
+                        B=self.reshapeToBeClassified(to_be_classified)
                     else:    
                         actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
                         band_idx=band_idx.reshape((band_idx.shape[1],1))
