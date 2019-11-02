@@ -193,82 +193,80 @@ class RandomThread(Thread):
                 continue
             plt.pause(1)
             try:
-                
-                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
-                actual_integer=np.asarray(a)     #handle it later
-                band_idx=np.asarray(v)
-                bar_height=np.asarray(w)
-                x_signal=np.asarray(x)
-                x_signal=x_signal.reshape((18271,))
+                if i%2==0:
+                    a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
+                    actual_integer=np.asarray(a)     #handle it later
+                    band_idx=np.asarray(v)
+                    bar_height=np.asarray(w)
+                    x_signal=np.asarray(x)
+                    x_signal=x_signal.reshape((18271,))
 
 
-                if selected_model=="cnn":
-                    to_be_classified=np.asarray(z_IQ)
-                else :
-                    to_be_classified=np.asarray(z_AP)
+                    if selected_model=="cnn":
+                        to_be_classified=np.asarray(z_IQ)
+                    else :
+                        to_be_classified=np.asarray(z_AP)
 
-                print(x_signal.shape)
-                print(to_be_classified.shape)
-                
-                if no_of_bands == 1:
-                    actual_integer=actual_integer.reshape((1,1))
-                    band_idx=band_idx.reshape((1,1))
-                    bar_height=bar_height.reshape((1,1))
-                    #to_be_classified=to_be_classified.T
-                    B=self.reshapeToBeClassified(to_be_classified)
-                else:    
-                    actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
-                    band_idx=band_idx.reshape((band_idx.shape[1],1))
-                    bar_height=bar_height.reshape((bar_height.shape[1],1))          
-                    B=self.reshapeToBeClassified(to_be_classified)
-
-                print(band_idx.shape)
-
-                if selected_model == "cnn":
-                    modulation_schemes=self.classifier(B,loaded_model_cnn)
-                if selected_model == "lstm":
-                    if channel==0:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
-                        print("awgn_lstm_weights_called")
-                    if channel==1:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh)
-                        print("rayleigh_lstm_weights_called")
-                    if channel==3:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
-                        print("rician_lstm_weights_called")
-                x=np.arange(x_signal.shape[0])
-                y=x_signal
-                #calculateMatchedInstances(modulation_schemes)
-                total_instances=total_instances+no_of_bands
-                for i in range(2):
-                    if i==0:
-                        ax.plot(x,y)
-                        fig.savefig("test.png")
-                        socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                        plt.pause(1)
-                        ax.clear()
-                        plt.pause(1)
-                    else:
-                        ax.plot(x,y)
-                        for j in range(no_of_bands):
-                            actual=self.numeric_to_string_actual(actual_integer[j][0])
-                            BN1=band_idx[j][0]
-                            BW1=BW
-                            height=bar_height[j][0]
-                            actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
-                            ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
-                            ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
-                            ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
-                        matchedInstances=calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
-                        total_matched_instances=total_matched_instances+matchedInstances
-                        accuracy=(total_matched_instances/total_instances)*100
-                        ax.text(BW1*(BN1-1), height+10,accuracy)
-                        fig.savefig("test.png")
-                        socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                        plt.pause(1)
-                        ax.clear()
-                        plt.pause(1)
+                    print(x_signal.shape)
+                    print(to_be_classified.shape)
                     
+                    if no_of_bands == 1:
+                        actual_integer=actual_integer.reshape((1,1))
+                        band_idx=band_idx.reshape((1,1))
+                        bar_height=bar_height.reshape((1,1))
+                        #to_be_classified=to_be_classified.T
+                        B=self.reshapeToBeClassified(to_be_classified)
+                    else:    
+                        actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
+                        band_idx=band_idx.reshape((band_idx.shape[1],1))
+                        bar_height=bar_height.reshape((bar_height.shape[1],1))          
+                        B=self.reshapeToBeClassified(to_be_classified)
+
+                    print(band_idx.shape)
+
+                    if selected_model == "cnn":
+                        modulation_schemes=self.classifier(B,loaded_model_cnn)
+                    if selected_model == "lstm":
+                        if channel==0:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
+                            print("awgn_lstm_weights_called")
+                        if channel==1:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh)
+                            print("rayleigh_lstm_weights_called")
+                        if channel==3:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
+                            print("rician_lstm_weights_called")
+                    total_instances=total_instances+no_of_bands
+
+                    x=np.arange(x_signal.shape[0])
+                    y=x_signal
+                    #calculateMatchedInstances(modulation_schemes)
+                    ax.plot(x,y)
+                    fig.savefig("test.png")
+                    socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    plt.pause(1)
+                    ax.clear()
+                    
+                
+                else:
+                    ax.plot(x,y)
+                    for j in range(no_of_bands):
+                        actual=self.numeric_to_string_actual(actual_integer[j][0])
+                        BN1=band_idx[j][0]
+                        BW1=BW
+                        height=bar_height[j][0]
+                        actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
+                        ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
+                        ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
+                        ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
+                    matchedInstances=calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
+                    total_matched_instances=total_matched_instances+matchedInstances
+                    accuracy=(total_matched_instances/total_instances)*100
+                    ax.text(BW1*(BN1-1), height+10,accuracy)
+                    fig.savefig("test.png")
+                    socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    
+                
             except:
                 continue        
         #sys.exit()
