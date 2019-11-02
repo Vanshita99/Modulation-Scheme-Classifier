@@ -257,7 +257,7 @@ class RandomThread(Thread):
                         BW1=BW
                         height=bar_height[j][0]
                         #actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
-                        ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
+                        #ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
                         #ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0])
                         #ax.text(BW1*(BN1-1), height+60, "actual",color='green')
                         ax.text(BW1*(BN1-1), height+30, actual,color='green')
