@@ -265,7 +265,8 @@ class RandomThread(Thread):
                     ax.text(BW1*(BN1-1), height+10,accuracy)
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                    
+                    plt.pause(1)
+                    ax.clear()
                 
             except:
                 continue        
