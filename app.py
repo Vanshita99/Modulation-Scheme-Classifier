@@ -30,7 +30,7 @@ selected_model = "lstm"
 no_of_bands=2
 channel=0
 SNR=25.0
-
+accuracy=0
 
 __author__ = 'slynn'
 
@@ -172,7 +172,7 @@ class RandomThread(Thread):
         #eng = matlab.engine.start_matlab()
         total_matched_instances=0
         total_instances=0
-        accuracy=0
+        
         
         band_idx=np.empty((no_of_bands,1))
         bar_height=np.empty((no_of_bands,1))
@@ -380,6 +380,8 @@ def handleChannelChange(json_data):
 
 
 def handleSNRChange(json_data):
+    global accuracy
+    accuracy=0
     global SNR
     print("Handling SNR selection")
     if json_data['snr'] == "25":
