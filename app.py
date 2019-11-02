@@ -260,7 +260,7 @@ class RandomThread(Thread):
                         #ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
                         #ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0])
                         #ax.text(BW1*(BN1-1), height+60, "actual",color='green')
-                        ax.text(BW1*(BN1-1), height+30, actual,color='green')
+                        ax.text(BW1*(BN1-1), height+60, actual,color='green')
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
@@ -277,9 +277,9 @@ class RandomThread(Thread):
                         
                         ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
                         #ax.text(BW1*(BN1-1), height+65, "predicted",color='purple')
-                        ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0],color='purple')
+                        ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0],color='red')
                         #ax.text(BW1*(BN1-1), height+35, "actual",color='green')
-                        ax.text(BW1*(BN1-1), height+30, actual,color='green')
+                        ax.text(BW1*(BN1-1), height+60, actual,color='green')
                     #actual_modulation_Schemes=actual_modulation_Schemes.reshape((no_of_bands,1))
                     matchedInstances=self.calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
                     total_matched_instances=total_matched_instances+matchedInstances
