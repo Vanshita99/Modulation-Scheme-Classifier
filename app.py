@@ -138,6 +138,8 @@ class RandomThread(Thread):
 
     def calculateMatchedInstances(self,modulation_schemes,actual_modulation_Schemes):
         matchedInstances=0
+        print(modulation_schemes)
+        print(actual_modulation_Schemes)
         for i in range(no_of_bands):
             if modulation_schemes[i][0]==actual_modulation_Schemes[i]:
                 matchedInstances=matchedInstances+1
