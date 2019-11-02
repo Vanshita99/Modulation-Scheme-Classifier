@@ -30,7 +30,7 @@ selected_model = "lstm"
 no_of_bands=2
 channel=0
 SNR=25.0
-accuracy=0
+checkSNRChange=False
 
 __author__ = 'slynn'
 
@@ -380,9 +380,9 @@ def handleChannelChange(json_data):
 
 
 def handleSNRChange(json_data):
-    # global accuracy
-    # accuracy=0
-    print("resetting accuracy")
+    global checkSNRChange
+    checkSNRChange=True
+    print("resetting accuracy"+checkSNRChange)
     global SNR
     print("Handling SNR selection")
     if json_data['snr'] == "25":
