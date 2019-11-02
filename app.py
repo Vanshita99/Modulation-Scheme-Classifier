@@ -136,12 +136,8 @@ class RandomThread(Thread):
         string_labels=string_labels.reshape((B.shape[0],1))
         return string_labels    
 
-    def calculateMatchedInstances(self,modulation_schemes,actual_modulation_Schemes):
-        matchedInstances=0
-        for i in range(no_of_bands):
-            if modulation_schemes[i]==actual_modulation_Schemes[i]:
-                matchedInstances=matchedInstances+1
-        return matchedInstances
+    # def calculateMatchedInstances(self):
+    #     return matchedInstances
 
 
     def reshapeToBeClassified(self,to_be_classified):
@@ -169,7 +165,6 @@ class RandomThread(Thread):
         Ideally to be run in a separate thread?
         """
         #eng = matlab.engine.start_matlab()
-        actual_modulation_Schemes=np.array([])
         band_idx=np.empty((no_of_bands,1))
         bar_height=np.empty((no_of_bands,1))
         y=np.empty((18271,))
@@ -177,9 +172,6 @@ class RandomThread(Thread):
         modulation_schemes=np.empty((no_of_bands,1))
         BW=1305.0714285714287   
         i=0
-        total_matched_instances=0
-        total_instances=0
-        accuracy=0
         #B=np.zeros((2,256,2))
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -236,36 +228,29 @@ class RandomThread(Thread):
                     if channel==3:
                         modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
                         print("rician_lstm_weights_called")
-                x=np.arange(x_signal.shape[0])
-                y=x_signal
+
                 #calculateMatchedInstances(modulation_schemes)
-                total_instances=total_instances+no_of_bands
-                for i in range(2):
-                    if i==0:
-                        ax.plot(x,y)
-                        fig.savefig("test.png")
-                        socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                        ax.clear()
-                        plt.pause(1)
-                    else:
-                        ax.plot(x,y)
-                        for j in range(no_of_bands):
-                            actual=self.numeric_to_string_actual(actual_integer[j][0])
-                            BN1=band_idx[j][0]
-                            BW1=BW
-                            height=bar_height[j][0]
-                            actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
-                            ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
-                            ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
-                            ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
-                        matchedInstances=calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
-                        total_matched_instances=total_matched_instances+matchedInstances
-                        accuracy=(total_matched_instances/total_instances)*100
-                        ax.text(BW1*(BN1-1), height+10,accuracy)
-                        fig.savefig("test.png")
-                        socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                        ax.clear()
-                    
+                if i%2==0:
+                    x=np.arange(x_signal.shape[0])
+                    y=x_signal
+                    ax.plot(x,y)
+                    fig.savefig("test.png")
+                    socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    ax.clear()
+                else:
+                    ax.plot(x,y)
+                    for j in range(no_of_bands):
+                        actual=self.numeric_to_string_actual(actual_integer[j][0])
+                        BN1=band_idx[j][0]
+                        BW1=BW
+                        height=bar_height[j][0]
+                        ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
+                        ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
+                        ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
+                    fig.savefig("test.png")
+                    socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    ax.clear()
+                i=i+1
             except:
                 continue        
         #sys.exit()
