@@ -60,6 +60,12 @@ $(document).ready(function(){
             }});
             
         });
+        // socket.on('newnumber1', function(msg) {
+        //     console.log("received");
+        //     $('#log').html(msg.accuracy)
+        //     });
+            
+        // });
   }); 
 
   $("#settings input[name='model_type']").click(function(){
