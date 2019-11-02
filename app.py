@@ -223,7 +223,7 @@ class RandomThread(Thread):
 
                     if selected_model == "cnn":
                         modulation_schemes=self.classifier(B,loaded_model_cnn)
-                    if selected_model == "lstm"
+                    if selected_model == "lstm":
                         if channel==0:
                             modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
                             print("awgn_lstm_weights_called")
