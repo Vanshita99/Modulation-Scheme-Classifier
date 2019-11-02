@@ -382,7 +382,8 @@ def handleChannelChange(json_data):
 def handleSNRChange(json_data):
     global checkSNRChange
     checkSNRChange=True
-    print("resetting accuracy"+checkSNRChange)
+    print("resetting accuracy")
+    print(checkSNRChange)
     global SNR
     print("Handling SNR selection")
     if json_data['snr'] == "25":
