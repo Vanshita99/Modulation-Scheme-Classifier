@@ -262,9 +262,9 @@ class RandomThread(Thread):
                         ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
                         ax.text(BW1*(BN1-1), height+60, actual)
                     matchedInstances=self.calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
-                    #total_matched_instances=total_matched_instances+matchedInstances
-                    #accuracy=(total_matched_instances/total_instances)*100
-                    #ax.text(BW*(band_idx[1][0]-1), height+10 ,str(accuracy))
+                    total_matched_instances=total_matched_instances+matchedInstances
+                    accuracy=(total_matched_instances/total_instances)*100
+                    ax.text(BW*(band_idx[1][0]-1), height+10 ,str(accuracy))
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
