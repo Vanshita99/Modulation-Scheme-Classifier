@@ -136,9 +136,12 @@ class RandomThread(Thread):
         string_labels=string_labels.reshape((B.shape[0],1))
         return string_labels    
 
-    # def calculateMatchedInstances(self):
-    #     return matchedInstances
-
+    def calculateMatchedInstances(self,modulation_schemes,actual_modulation_Schemes):
+        matchedInstances=0
+        for i in range(no_of_bands):
+            if modulation_schemes[i]==actual_modulation_Schemes[i]:
+                matchedInstances=matchedInstances+1
+        return matchedInstances
 
     def reshapeToBeClassified(self,to_be_classified):
         # B=np.zeros((no_of_bands,256,2))
@@ -165,6 +168,10 @@ class RandomThread(Thread):
         Ideally to be run in a separate thread?
         """
         #eng = matlab.engine.start_matlab()
+        total_matched_instances=0
+        total_instances=0
+        accuracy=0
+        actual_modulation_Schemes=np.array([])
         band_idx=np.empty((no_of_bands,1))
         bar_height=np.empty((no_of_bands,1))
         y=np.empty((18271,))
@@ -236,7 +243,7 @@ class RandomThread(Thread):
 
 
 
-
+                    total_instances=total_instances+no_of_bands
                     x=np.arange(x_signal.shape[0])
                     y=x_signal
                     ax.plot(x,y)
@@ -250,9 +257,14 @@ class RandomThread(Thread):
                         BN1=band_idx[j][0]
                         BW1=BW
                         height=bar_height[j][0]
+                        actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
                         ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
                         ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
-                        ax.text(BW1*(BN1-1), height+60, actual)  # just plug modulation_schemes instead of ms her
+                        ax.text(BW1*(BN1-1), height+60, actual)
+                    matchedInstances=calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
+                    total_matched_instances=total_matched_instances+matchedInstances
+                    accuracy=(total_matched_instances/total_instances)*100
+                    ax.text(BW1*(BN1-1), height+10,accuracy)
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
