@@ -173,7 +173,7 @@ class RandomThread(Thread):
         total_matched_instances=0
         total_instances=0
         accuracy=0
-        actual_modulation_Schemes=np.array([])
+        
         band_idx=np.empty((no_of_bands,1))
         bar_height=np.empty((no_of_bands,1))
         y=np.empty((18271,))
@@ -254,6 +254,7 @@ class RandomThread(Thread):
                     ax.clear()
                 else:
                     ax.plot(x,y)
+                    actual_modulation_Schemes=np.array([])
                     for j in range(no_of_bands):
                         actual=self.numeric_to_string_actual(actual_integer[j][0])
                         BN1=band_idx[j][0]
@@ -272,6 +273,7 @@ class RandomThread(Thread):
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
                 i=i+1
+                #actual_modulation_Schemes=np.array([])
             except:
                 continue        
         #sys.exit()
