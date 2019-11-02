@@ -380,8 +380,8 @@ def handleChannelChange(json_data):
 
 
 def handleSNRChange(json_data):
-    global accuracy
-    accuracy=0
+    # global accuracy
+    # accuracy=0
     print("resetting accuracy")
     global SNR
     print("Handling SNR selection")
