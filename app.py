@@ -198,8 +198,8 @@ class RandomThread(Thread):
                 
 
                 #calculateMatchedInstances(modulation_schemes)
-                if checkSNRChange==True:
-                    accuracy=0
+                # if checkSNRChange==True:
+                #     accuracy=0
                 if i%2==0:
 
                     a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
@@ -251,21 +251,33 @@ class RandomThread(Thread):
                     x=np.arange(x_signal.shape[0])
                     y=x_signal
                     ax.plot(x,y)
+                    for j in range(no_of_bands):
+                        actual=self.numeric_to_string_actual(actual_integer[j][0])
+                        BN1=band_idx[j][0]
+                        BW1=BW
+                        height=bar_height[j][0]
+                        #actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
+                        ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
+                        #ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0])
+                        ax.text(BW1*(BN1-1), height+30, actual,color='green')
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
                 else:
                     ax.plot(x,y)
                     actual_modulation_Schemes=np.array([])
+                    color='red'
                     for j in range(no_of_bands):
                         actual=self.numeric_to_string_actual(actual_integer[j][0])
                         BN1=band_idx[j][0]
                         BW1=BW
                         height=bar_height[j][0]
                         actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
+                        if actual==modulation_schemes[j][0]:
+                            color='green'
                         ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
-                        ax.text(BW1*(BN1-1), height+30, modulation_schemes[j][0])
-                        ax.text(BW1*(BN1-1), height+60, actual)
+                        ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0],color=color)
+                        ax.text(BW1*(BN1-1), height+30, actual,color='green')
                     #actual_modulation_Schemes=actual_modulation_Schemes.reshape((no_of_bands,1))
                     matchedInstances=self.calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
                     total_matched_instances=total_matched_instances+matchedInstances
@@ -382,10 +394,10 @@ def handleChannelChange(json_data):
 
 
 def handleSNRChange(json_data):
-    global checkSNRChange
-    checkSNRChange=True
-    print("resetting accuracy")
-    print(checkSNRChange)
+    # global checkSNRChange
+    # checkSNRChange=True
+    # print("resetting accuracy")
+    # print(checkSNRChange)
     global SNR
     print("Handling SNR selection")
     if json_data['snr'] == "25":
