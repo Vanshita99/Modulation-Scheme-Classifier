@@ -186,51 +186,57 @@ class RandomThread(Thread):
             plt.pause(1)
             try:
                 
-                a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
-                actual_integer=np.asarray(a)     #handle it later
-                band_idx=np.asarray(v)
-                bar_height=np.asarray(w)
-                x_signal=np.asarray(x)
-                x_signal=x_signal.reshape((18271,))
-
-
-                if selected_model=="cnn":
-                    to_be_classified=np.asarray(z_IQ)
-                else :
-                    to_be_classified=np.asarray(z_AP)
-
-                print(x_signal.shape)
-                print(to_be_classified.shape)
                 
-                if no_of_bands == 1:
-                    actual_integer=actual_integer.reshape((1,1))
-                    band_idx=band_idx.reshape((1,1))
-                    bar_height=bar_height.reshape((1,1))
-                    #to_be_classified=to_be_classified.T
-                    B=self.reshapeToBeClassified(to_be_classified)
-                else:    
-                    actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
-                    band_idx=band_idx.reshape((band_idx.shape[1],1))
-                    bar_height=bar_height.reshape((bar_height.shape[1],1))          
-                    B=self.reshapeToBeClassified(to_be_classified)
-
-                print(band_idx.shape)
-
-                if selected_model == "cnn":
-                    modulation_schemes=self.classifier(B,loaded_model_cnn)
-                if selected_model == "lstm":
-                    if channel==0:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
-                        print("awgn_lstm_weights_called")
-                    if channel==1:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh)
-                        print("rayleigh_lstm_weights_called")
-                    if channel==3:
-                        modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
-                        print("rician_lstm_weights_called")
 
                 #calculateMatchedInstances(modulation_schemes)
                 if i%2==0:
+
+                    a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
+                    actual_integer=np.asarray(a)     #handle it later
+                    band_idx=np.asarray(v)
+                    bar_height=np.asarray(w)
+                    x_signal=np.asarray(x)
+                    x_signal=x_signal.reshape((18271,))
+
+
+                    if selected_model=="cnn":
+                        to_be_classified=np.asarray(z_IQ)
+                    else :
+                        to_be_classified=np.asarray(z_AP)
+
+                    print(x_signal.shape)
+                    print(to_be_classified.shape)
+                    
+                    if no_of_bands == 1:
+                        actual_integer=actual_integer.reshape((1,1))
+                        band_idx=band_idx.reshape((1,1))
+                        bar_height=bar_height.reshape((1,1))
+                        #to_be_classified=to_be_classified.T
+                        B=self.reshapeToBeClassified(to_be_classified)
+                    else:    
+                        actual_integer=actual_integer.reshape((actual_integer.shape[1],1))
+                        band_idx=band_idx.reshape((band_idx.shape[1],1))
+                        bar_height=bar_height.reshape((bar_height.shape[1],1))          
+                        B=self.reshapeToBeClassified(to_be_classified)
+
+                    print(band_idx.shape)
+
+                    if selected_model == "cnn":
+                        modulation_schemes=self.classifier(B,loaded_model_cnn)
+                    if selected_model == "lstm"
+                        if channel==0:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
+                            print("awgn_lstm_weights_called")
+                        if channel==1:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh)
+                            print("rayleigh_lstm_weights_called")
+                        if channel==3:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
+                            print("rician_lstm_weights_called")
+
+
+
+
                     x=np.arange(x_signal.shape[0])
                     y=x_signal
                     ax.plot(x,y)
