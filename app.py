@@ -198,6 +198,8 @@ class RandomThread(Thread):
                 
 
                 #calculateMatchedInstances(modulation_schemes)
+                if checkSNRChange==True:
+                    accuracy=0
                 if i%2==0:
 
                     a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
