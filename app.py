@@ -264,7 +264,7 @@ class RandomThread(Thread):
                     matchedInstances=calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
                     total_matched_instances=total_matched_instances+matchedInstances
                     accuracy=(total_matched_instances/total_instances)*100
-                    ax.text(BW*(band_idx[1][0]-1), height+10 ,str(accuracy))
+                    #ax.text(BW*(band_idx[1][0]-1), height+10 ,str(accuracy))
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
