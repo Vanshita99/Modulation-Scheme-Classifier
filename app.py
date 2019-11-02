@@ -273,16 +273,15 @@ class RandomThread(Thread):
                         BW1=BW
                         height=bar_height[j][0]
                         actual_modulation_Schemes=np.append(actual_modulation_Schemes,actual)
-                        if actual==modulation_schemes[j][0]:
-                            color='green'
+                        
                         ax.add_patch(Rectangle(xy=(BW1*(BN1-1),0) ,width=BW1, height=height, linewidth=1, color='red', fill=False))
-                        ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0],color=color)
+                        ax.text(BW1*(BN1-1), height+60, modulation_schemes[j][0],color='orange')
                         ax.text(BW1*(BN1-1), height+30, actual,color='green')
                     #actual_modulation_Schemes=actual_modulation_Schemes.reshape((no_of_bands,1))
                     matchedInstances=self.calculateMatchedInstances(modulation_schemes,actual_modulation_Schemes)
                     total_matched_instances=total_matched_instances+matchedInstances
                     accuracy=(total_matched_instances/total_instances)*100
-                    ax.text(BW*(band_idx[1][0]-1), height+10 ,str(accuracy))
+                    ax.text(1.5*BW*(band_idx[1][0]-1), height+10 ,str(accuracy))
                     fig.savefig("test.png")
                     socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
                     ax.clear()
