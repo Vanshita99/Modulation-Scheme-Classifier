@@ -62,8 +62,8 @@ $(document).ready(function(){
             // $('#progressbar').progressbar({
             //     value : msg2
             // });
-            numbers_string = numbers_string + '<p>' + msg2.toString() + '</p>';
-            $('#log').html(numbers_string);
+            
+            $('#log').html(numbers_string + '<p>' + msg2.toString() + '</p>');
 
 
         });
