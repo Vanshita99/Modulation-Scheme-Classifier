@@ -18,7 +18,7 @@ function initSettings() {
   settings.band = 'two';
   settings.channel='AWGN';
   settings.snr='25';
-  //send_settings();
+  send_settings();
 }
 
 function set_model_cnn() {
