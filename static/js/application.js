@@ -62,12 +62,8 @@ $(document).ready(function(){
             // $('#progressbar').progressbar({
             //     value : msg2
             // });
+            $.getElementById('smname').value = msg2;
 
-            if ($(".progress .progress-bar")[0]) {
-                $('.progress .progress-bar').progressbar(
-                   {value:msg2}
-                ); // bootstrap 3
-            }
         });
         // socket.on('newnumber1', function(msg) {
         //     console.log("received");
