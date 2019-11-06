@@ -178,7 +178,7 @@ class RandomThread(Thread):
         total_matched_instances=0
         total_instances=0
         accuracy=0
-        global checkSNRChange 
+        
         band_idx=np.empty((no_of_bands,1))
         bar_height=np.empty((no_of_bands,1))
         y=np.empty((18271,))
@@ -206,6 +206,7 @@ class RandomThread(Thread):
                 #calculateMatchedInstances(modulation_schemes)
                 if checkSNRChange==True:
                      accuracy=0
+
                      total_matched_instances=0
                      total_instances=0
                      checkSNRChange= False;
