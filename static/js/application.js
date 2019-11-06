@@ -59,8 +59,9 @@ $(document).ready(function(){
                 $('#div_img').html('<img class="img-responsive" style="width:100%;" src="data:image/png;base64,' + result + '" />');
             }});
             console.log(msg2)
-            var html="<div class='progress-bar progress-bar-striped active' role='progressbar' aria-valuenow="+msg2+" aria-valuemin='0' aria-valuemax='100' style='width:"+msg2+"%'>"+msg2+"%</div>";    
-            $(".progress").append(html);
+            $('#progressbar').progressbar({
+                value:msg2
+            });
         });
         // socket.on('newnumber1', function(msg) {
         //     console.log("received");
