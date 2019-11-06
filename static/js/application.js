@@ -51,14 +51,14 @@ $(document).ready(function(){
         $("#stop").prop('disabled', false);
         socket=io.connect('http://' + document.domain + ':' + location.port + '/test');
         socket.connect();
-        socket.on('newnumber', function(msg) {
+        socket.on('newnumber', function(msg1,msg2) {
             console.log("received");
             
             $.ajax({url: "get_image", success: function(result){
                 $('#div_img').html("");
                 $('#div_img').html('<img class="img-responsive" style="width:100%;" src="data:image/png;base64,' + result + '" />');
             }});
-            
+            console.log(msg2)
         });
         // socket.on('newnumber1', function(msg) {
         //     console.log("received");

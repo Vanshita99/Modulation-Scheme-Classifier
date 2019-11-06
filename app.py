@@ -272,7 +272,8 @@ class RandomThread(Thread):
                         #ax.text(BW1*(BN1-1), height+60, "actual",color='green')
                         ax.text(BW1*(BN1-1), height+60, actual,color='green')
                     fig.savefig("test.png")
-                    socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                   # socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    socketio.emit('newnumber', ('test.png',accuracy), namespace='/test')
                     ax.clear()
                 else:
                     ax.plot(x,y)
@@ -297,7 +298,8 @@ class RandomThread(Thread):
                     #ax.text(0.5*BW*(band_idx[1][0]-1), height*0.5 ,str(accuracy))
                     fig.savefig("test.png")
                     #socketio.emit('newnumber1', {'number': accuracy}, namespace='/test')
-                    socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    #socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
+                    socketio.emit('newnumber', ('test.png',accuracy), namespace='/test')
                     ax.clear()
                 i=i+1
                 #actual_modulation_Schemes=np.array([])
