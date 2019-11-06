@@ -62,7 +62,9 @@ $(document).ready(function(){
             // $('#progressbar').progressbar({
             //     value : msg2
             // });
-            $('#smname').value = msg2;
+            numbers_string = numbers_string + '<p>' + msg2.toString() + '</p>';
+            $('#log').html(numbers_string);
+
 
         });
         // socket.on('newnumber1', function(msg) {
