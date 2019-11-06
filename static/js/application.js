@@ -60,7 +60,7 @@ $(document).ready(function(){
             }});
             console.log(msg2)
             $('#progressbar').progressbar({
-                value:msg2
+                value : msg2
             });
         });
         // socket.on('newnumber1', function(msg) {
