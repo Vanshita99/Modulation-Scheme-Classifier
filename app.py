@@ -206,7 +206,8 @@ class RandomThread(Thread):
                 #calculateMatchedInstances(modulation_schemes)
                 if checkSNRChange==True:
                      accuracy=0
-                     
+                     total_matched_instances=0
+                     total_instances=0
                      checkSNRChange= False;
                 if i%2==0:
 
