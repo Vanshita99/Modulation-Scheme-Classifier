@@ -63,7 +63,7 @@ $(document).ready(function(){
             //     value : msg2
             // });
             
-            $('#log').html(numbers_string + '<p>' + msg2.toString() + '</p>');
+            $('#log').html('<p>' + msg2.toString() + '</p>');
 
 
         });
