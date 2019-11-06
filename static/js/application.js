@@ -59,9 +59,15 @@ $(document).ready(function(){
                 $('#div_img').html('<img class="img-responsive" style="width:100%;" src="data:image/png;base64,' + result + '" />');
             }});
             console.log(msg2)
-            $('#progressbar').progressbar({
-                value : msg2
-            });
+            // $('#progressbar').progressbar({
+            //     value : msg2
+            // });
+
+            if ($(".progress .progress-bar")[0]) {
+                $('.progress .progress-bar').progressbar(
+                   {value:msg2}
+                ); // bootstrap 3
+            }
         });
         // socket.on('newnumber1', function(msg) {
         //     console.log("received");
