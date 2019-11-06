@@ -39,7 +39,7 @@ $(document).ready(function(){
     //connect to the socket server.
      
     var str1 = "data:image/png;base64,";
-    initSettings();
+    //initSettings();
 
     $("#start").prop('disabled', false);
     $("#stop").prop('disabled', true);
