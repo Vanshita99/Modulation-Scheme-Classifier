@@ -247,7 +247,7 @@ class RandomThread(Thread):
                         if channel==1:
                             modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh)
                             print("rayleigh_lstm_weights_called")
-                        if channel==1:
+                        if channel==2:
                             modulation_schemes=self.classifier(B,loaded_model_lstm_rayleigh_doppler)
                             print("rayleigh_doppler_lstm_weights_called")
 
