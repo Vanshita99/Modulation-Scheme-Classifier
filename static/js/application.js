@@ -117,11 +117,11 @@ $(document).ready(function(){
   });
 
 
-  /*$('#stop').on('click',function(){
+  $('#stop').on('click',function(){
         $("#start").prop('disabled', false);
         $("#stop").prop('disabled', true);
         socket.disconnect();
         console.log("stopping");
-  });*/
+  });
 
 });

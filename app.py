@@ -421,12 +421,12 @@ def test_connect():
         thread.start()
 
 
-# @socketio.on('disconnect', namespace='/test')
-# def test_disconnect():
-#     global thread_loop_condition
-#     thread_loop_condition=False
-#     #thread_stop_event.set()
-#     print('Client disconnected')
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    global thread_loop_condition
+    thread_loop_condition=False
+    #thread_stop_event.set()
+    print('Client disconnected')
     
 @app.route("/settings/<string:data>")
 def recieve_settings(data):
