@@ -258,9 +258,15 @@ class RandomThread(Thread):
                     if checkSNRChange==True:
                      #accuracy=0
 
-                     total_matched_instances=0
-                     total_instances=0
-                     checkSNRChange= False;
+                        total_matched_instances=0
+                        total_instances=0
+                        band_idx=np.empty((no_of_bands,1))
+                        bar_height=np.empty((no_of_bands,1))
+                        y=np.empty((18271,))
+                        x=np.empty((18271,))
+                        modulation_schemes=np.empty((no_of_bands,1))
+                            checkSNRChange= False;
+
 
 
                     if selected_model=="cnn":
