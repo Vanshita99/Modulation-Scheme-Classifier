@@ -342,8 +342,8 @@ class RandomThread(Thread):
                         ax.text(BW1*(BN1-1), height+60, actual,color='green')
                     fig.savefig("test.png")
                    # socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                    if checkSNRChange == True:
-                            socketio.sleep(7)
+                    # if checkSNRChange == True:
+                    #         socketio.sleep(1)
                     socketio.emit('newnumber', ('test.png',accuracy), namespace='/test')
                     ax.clear()
                 else:
@@ -370,8 +370,8 @@ class RandomThread(Thread):
                     fig.savefig("test.png")
                     #socketio.emit('newnumber1', {'number': accuracy}, namespace='/test')
                     #socketio.emit('newnumber', {'number': "test.png"}, namespace='/test')
-                    if checkSNRChange == True:
-                            socketio.sleep(7)
+                    # if checkSNRChange == True:
+                    #         socketio.sleep(1)
                     socketio.emit('newnumber', ('test.png',accuracy), namespace='/test')
                     ax.clear()
                 i=i+1
