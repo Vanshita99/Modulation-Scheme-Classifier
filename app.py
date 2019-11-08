@@ -119,7 +119,7 @@ class RandomThread(Thread):
 
     def loading_model_cnn_rician_doppler(self):
         loaded_model=self.loading_model_cnn()
-        loaded_model.load_weights("demo_cnn_Rician_10")
+        loaded_model.load_weights("demo_cnn_Racian_10")
         return loaded_model
 
 
