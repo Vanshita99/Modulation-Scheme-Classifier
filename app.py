@@ -204,12 +204,7 @@ class RandomThread(Thread):
                 
 
                 #calculateMatchedInstances(modulation_schemes)
-                if checkSNRChange==True:
-                     #accuracy=0
-
-                     total_matched_instances=0
-                     total_instances=0
-                     checkSNRChange= False;
+                
                 if i%2==0:
 
                     a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
@@ -218,6 +213,13 @@ class RandomThread(Thread):
                     bar_height=np.asarray(w)
                     x_signal=np.asarray(x)
                     x_signal=x_signal.reshape((18271,))
+
+                    if checkSNRChange==True:
+                     #accuracy=0
+
+                     total_matched_instances=0
+                     total_instances=0
+                     checkSNRChange= False;
 
 
                     if selected_model=="cnn":
