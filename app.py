@@ -84,28 +84,52 @@ class RandomThread(Thread):
             return "8-PAM"
     
     def loading_model_cnn(self):
-        json_file = open("model_cnn.json", 'r')
+        json_file = open("model_demo_cnn.json", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("loading model for cnn")
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
-        print("loaded_weights cnn")
-        loaded_model.load_weights("weights_cnn.hdf5")
-        print("Loaded model from disk cnn")
+        
         # evaluate loaded model on test data
-        loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        loaded_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         print("model_compiled for cnn")
         
         return loaded_model
 # do the same for cnn when you get the weights of awgn rayleigh and rician for cnn
+    def loading_model_cnn_awgn(self):
+        loaded_model=self.loading_model_cnn()
+        loaded_model.load_weights("demo_cnn_AWGN")
+        return loaded_model
+
+    def loading_model_cnn_rayleigh(self):
+        loaded_model=self.loading_model_cnn()
+        loaded_model.load_weights("demo_cnn_Rayleigh")
+        return loaded_model
+
+    def loading_model_cnn_rayleigh_doppler(self):
+        loaded_model=self.loading_model_cnn()
+        loaded_model.load_weights("demo_cnn_Rayleigh_10")
+        return loaded_model
+
+    def loading_model_cnn_rician(self):
+        loaded_model=self.loading_model_cnn()
+        loaded_model.load_weights("demo_cnn_Racian")
+        return loaded_model
+
+    def loading_model_cnn_rician_doppler(self):
+        loaded_model=self.loading_model_cnn()
+        loaded_model.load_weights("demo_cnn_Rician_10")
+        return loaded_model
+
+
     def loading_model_lstm(self):
-        json_file = open("model_lstm.json", 'r')
+        json_file = open("model_demo_lstm.json", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         print("loading model for lstm")
         loaded_model = model_from_json(loaded_model_json)
-        loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        loaded_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         print("model_compiled lstm")
         
         return loaded_model
@@ -129,11 +153,15 @@ class RandomThread(Thread):
         loaded_model=self.loading_model_lstm()
         loaded_model.load_weights("demo_Racian.hdf5")
         return loaded_model
+
+    def loading_model_lstm_rician_doppler(self):
+        loaded_model=self.loading_model_lstm()
+        loaded_model.load_weights("demo_Rician_10.hdf5")
+        return loaded_model
     
     def classifier(self,B,loaded_model):
         
-        if selected_model=="cnn":
-            B = B.reshape(no_of_bands,256,2,1)
+        
         labels=loaded_model.predict_classes(B)
         string_labels=np.array([])
         for i in range(B.shape[0]):
@@ -158,16 +186,22 @@ class RandomThread(Thread):
         to_be_classified=to_be_classified.T
         if no_of_bands==1:
             to_be_classified=to_be_classified.reshape(1,256,2)
-        normalizer = joblib.load('normalizer.pkl')
-        a=normalizer.transform(to_be_classified[:,:,0])
+        if selected_model== "lstm":
+            normalizer = joblib.load('normalizer.pkl')
+            a=normalizer.transform(to_be_classified[:,:,0])
 
-        max_abs_scaler = joblib.load('max_abs_scaler.pkl')
-        b=max_abs_scaler.transform(to_be_classified[:,:,1])
+            max_abs_scaler = joblib.load('max_abs_scaler.pkl')
+            b=max_abs_scaler.transform(to_be_classified[:,:,1])
 
-        a=a.reshape(-1,256,1)
-        b=b.reshape(-1,256,1)
-        X1=np.concatenate((a,b),axis=-1)
-        return X1
+            a=a.reshape(-1,256,1)
+            b=b.reshape(-1,256,1)
+            X1=np.concatenate((a,b),axis=-1)
+            return X1
+        if selected_model=='cnn':
+            to_be_classified=to_be_classified/7.724359934349434
+            to_be_classified=to_be_classified.reshape(-1,256,2)
+            to_be_classified=to_be_classified.reshape(-1,2,256,1)
+            return to_be_classified
 
     def randomNumberGenerator(self):
         """
@@ -189,11 +223,18 @@ class RandomThread(Thread):
         #B=np.zeros((2,256,2))
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        loaded_model_cnn=self.loading_model_cnn()
+        #loaded_model_cnn=self.loading_model_cnn()
         loaded_model_lstm_awgn=self.loading_model_lstm_awgn()
         loaded_model_lstm_rayleigh=self.loading_model_lstm_rayleigh()
         loaded_model_lstm_rayleigh_doppler=self.loading_model_lstm_rayleigh_doppler()
         loaded_model_lstm_rician=self.loading_model_lstm_rician()
+        loaded_model_lstm_rician_doppler=self.loading_model_lstm_rician_doppler()
+
+        loaded_model_cnn_awgn=self.loading_model_cnn_awgn()
+        loaded_model_cnn_rayleigh=self.loading_model_cnn_rayleigh()
+        loaded_model_cnn_rayleigh_doppler=self.loading_model_cnn_rayleigh_doppler()
+        loaded_model_cnn_rician=self.loading_model_cnn_rician()
+        loaded_model_cnn_rician_doppler=self.loading_model_cnn_rician_doppler()
 
         while not thread_stop_event.isSet():
             if not thread_loop_condition:
@@ -245,7 +286,24 @@ class RandomThread(Thread):
                     print(band_idx.shape)
 
                     if selected_model == "cnn":
-                        modulation_schemes=self.classifier(B,loaded_model_cnn)
+                        if channel==0:
+                            modulation_schemes=self.classifier(B,loaded_model_cnn_awgn)
+                            print("awgn_cnn_weights_called")
+                        if channel==1:
+                            modulation_schemes=self.classifier(B,loaded_model_cnn_rayleigh)
+                            print("rayleigh_cnn_weights_called")
+                        if channel==2:
+                            modulation_schemes=self.classifier(B,loaded_model_cnn_rayleigh_doppler)
+                            print("rayleigh_doppler_cnn_weights_called")
+
+                        if channel==3:
+                            modulation_schemes=self.classifier(B,loaded_model_cnn_rician)
+                            print("rician_cnn_weights_called")
+
+                        if channel==4:
+                            modulation_schemes=self.classifier(B,loaded_model_cnn_rician_doppler)
+                            print("rician_doppler_cnn_weights_called")
+
                     if selected_model == "lstm":
                         if channel==0:
                             modulation_schemes=self.classifier(B,loaded_model_lstm_awgn)
@@ -260,6 +318,11 @@ class RandomThread(Thread):
                         if channel==3:
                             modulation_schemes=self.classifier(B,loaded_model_lstm_rician)
                             print("rician_lstm_weights_called")
+
+                        if channel==4:
+                            modulation_schemes=self.classifier(B,loaded_model_lstm_rician_doppler)
+                            print("rician_doppler_lstm_weights_called")
+
 
 
 
