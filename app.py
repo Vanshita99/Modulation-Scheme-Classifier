@@ -209,7 +209,7 @@ class RandomThread(Thread):
 
                      total_matched_instances=0
                      total_instances=0
-                     checkSNRChange= False;
+                     #checkSNRChange= False;
                 if i%2==0:
 
                     a,v,w,x,BW,z_IQ,z_AP =eng.testFunction(no_of_bands,channel,SNR,nargout=7)
