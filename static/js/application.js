@@ -15,7 +15,7 @@ function send_settings() {
 function initSettings() {
   settings.cnn = false;
   settings.lstm = true;
-  settings.band = 'two';
+  settings.band = 'three';
   settings.channel='AWGN';
   settings.snr='25';
   //send_settings();
