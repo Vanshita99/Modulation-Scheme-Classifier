@@ -1,33 +1,3 @@
-async_mode = None
-
-if async_mode is None:
-    try:
-        import eventlet
-        async_mode = 'eventlet'
-    except ImportError:
-        pass
-
-    if async_mode is None:
-        try:
-            from gevent import monkey
-            async_mode = 'gevent'
-        except ImportError:
-            pass
-
-    if async_mode is None:
-        async_mode = 'threading'
-
-    print('async_mode is ' + async_mode)
-
-# monkey patching is necessary because this application uses a background
-# thread
-if async_mode == 'eventlet':
-    import eventlet
-    eventlet.monkey_patch()
-elif async_mode == 'gevent':
-    from gevent import monkey
-    monkey.patch_all()
-
 from keras.models import model_from_json
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context
@@ -69,7 +39,7 @@ app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
 
 #turn the flask app into a socketio app
-socketio = SocketIO(app, async_mode=async_mode)
+socketio = SocketIO(app)
 
 #random number Generator Thread
 
@@ -228,7 +198,7 @@ class RandomThread(Thread):
             X1=np.concatenate((a,b),axis=-1)
             return X1
         if selected_model=='cnn':
-            to_be_classified=to_be_classified/7.724359934349434
+            to_be_classified=to_be_classified/7.724359934349434 #7.724 is the numpy max
             to_be_classified=to_be_classified.reshape(-1,256,2)
             to_be_classified=to_be_classified.reshape(-1,2,256,1)
             return to_be_classified
