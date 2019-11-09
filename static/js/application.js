@@ -46,7 +46,7 @@ $(document).ready(function(){
 
     //receive details from server
   $('#start').on('click',function(){
-        //initSettings();
+        initSettings();
         $("#start").prop('disabled', true);
         $("#stop").prop('disabled', false);
         socket=io.connect('http://' + document.domain + ':' + location.port + '/test');
