@@ -39,7 +39,7 @@ app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
 
 #turn the flask app into a socketio app
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode=async_mode)
 
 #random number Generator Thread
 
