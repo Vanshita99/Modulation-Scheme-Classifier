@@ -198,7 +198,8 @@ class RandomThread(Thread):
             X1=np.concatenate((a,b),axis=-1)
             return X1
         if selected_model=='cnn':
-            to_be_classified=to_be_classified/np.max(to_be_classified) #7.724 is the numpy max
+            if channel==0:
+                to_be_classified=to_be_classified/3.769009632596048 #7.724 is the numpy max
             to_be_classified=to_be_classified.reshape(-1,256,2)
             to_be_classified=to_be_classified.reshape(-1,2,256,1)
             return to_be_classified
