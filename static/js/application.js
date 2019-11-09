@@ -42,7 +42,7 @@ $(document).ready(function(){
     initSettings();
 
     $("#start").prop('disabled', false);
-    $("#stop").prop('disabled', true);
+    //$("#stop").prop('disabled', true);
 
     //receive details from server
   $('#start').on('click',function(){
@@ -117,11 +117,11 @@ $(document).ready(function(){
   });
 
 
-  $('#stop').on('click',function(){
-        $("#start").prop('disabled', false);
-        $("#stop").prop('disabled', true);
-        socket.disconnect();
-        console.log("stopping");
-  });
+  // $('#stop').on('click',function(){
+  //       $("#start").prop('disabled', false);
+  //       $("#stop").prop('disabled', true);
+  //       socket.disconnect();
+  //       console.log("stopping");
+  // });
 
 });
